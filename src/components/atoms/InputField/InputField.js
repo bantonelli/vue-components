@@ -1,15 +1,12 @@
 const inputFieldTemplate2 = `
 <div :class="[type === 'textarea' ? 'text-area-field' : 'input-field',
   {
-    'is-disabled': disabled,
-    'el-input-group': $slots.prepend || $slots.append,
-    'el-input-group--append': $slots.append,
-    'el-input-group--prepend': $slots.prepend
+    'is-disabled': disabled
   }
 ]">
   <template v-if="type !== 'textarea'">
     <!-- Prepend Slot -->
-    <div class="el-input-group__prepend" v-if="$slots.prepend">
+    <div class="input-field__prepend" v-if="$slots.prepend">
       <slot name="prepend"></slot>
     </div>
 
@@ -31,11 +28,11 @@ const inputFieldTemplate2 = `
           @click="handleIconClick"
         >
         </i>
-    </pe-input>  
+    </pe-input>      
     <i class="el-input__icon el-icon-loading" v-if="validating"></i>
     
     <!-- Append Slot -->
-    <div class="el-input-group__append" v-if="$slots.append">
+    <div class="input-field__append" v-if="$slots.append">
       <slot name="append"></slot>
     </div>
   </template>
@@ -54,7 +51,7 @@ const inputFieldTemplate2 = `
 </div>
 `;
 
-import emitter from '../../mixins/emitter';
+import emitter from '../../utils/mixins/emitter';
 import calcTextareaHeight from './calcTextareaHeight';
 import merge from '../../utils/merge';
 import Input from '../Input';
