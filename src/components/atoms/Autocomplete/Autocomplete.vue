@@ -91,7 +91,8 @@
       suggestionVisible() {
         const suggestions = this.suggestions;
         let isValidData = Array.isArray(suggestions) && suggestions.length > 0;
-        let val = (isValidData || this.loading) && this.isFocus;
+        // let val = (isValidData || this.loading) && this.isFocus;
+        let val = (isValidData || this.loading);
         return val;
       }
     },
@@ -153,28 +154,6 @@
         this.$nextTick(_ => {
           this.suggestions = [];
         });
-      },
-      highlight(index) {
-        if (!this.suggestionVisible || this.loading) { return; }
-        if (index < 0) index = 0;
-        if (index >= this.suggestions.length) {
-          index = this.suggestions.length - 1;
-        }
-        const suggestion = this.$refs.suggestions.$el.querySelector('.el-autocomplete-suggestion__wrap');
-        const suggestionList = suggestion.querySelectorAll('.el-autocomplete-suggestion__list li');
-
-        let highlightItem = suggestionList[index];
-        let scrollTop = suggestion.scrollTop;
-        let offsetTop = highlightItem.offsetTop;
-
-        if (offsetTop + highlightItem.scrollHeight > (scrollTop + suggestion.clientHeight)) {
-          suggestion.scrollTop += highlightItem.scrollHeight;
-        }
-        if (offsetTop < scrollTop) {
-          suggestion.scrollTop -= highlightItem.scrollHeight;
-        }
-
-        this.highlightedIndex = index;
       }
     },
     mounted() {
@@ -187,3 +166,58 @@
     }
   };
 </script>
+
+<style lang="scss">
+
+.autocomplete {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+.autocomplete-suggestions {
+  margin: 0;
+  box-shadow: 0 0 6px 0 rgba(0,0,0,0.04), 0 2px 4px 0 rgba(0,0,0,0.12);
+
+  &__wrapper {
+    max-height: 280px;
+    overflow: auto;
+    font-family: inherit;
+  }
+
+  &__item {
+    list-style: none;
+    line-height: 36px;
+    padding: 0 10px;
+    margin: 0;
+    cursor: pointer;
+    color: var(--color-extra-light-black);
+    font-size: 14px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+
+    &:hover {
+      background-color: gray;
+    }
+    &.highlighted {
+      background-color: blue;
+      color: white;
+    }
+    &:active {
+      background-color: darken(blue, 0.2);
+    }
+    &.divider {
+      margin-top: 6px;
+      border-top: 1px solid grey;
+    }
+    &.divider:last-child {
+      margin-bottom: -6px;
+    }
+  }
+
+  & .el-icon-loading {
+    vertical-align: middle;
+  }
+}
+
+</style>
