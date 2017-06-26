@@ -10,7 +10,7 @@ const inputFieldTemplate2 = `
       <slot name="prepend"></slot>
     </div>
 
-    <pe-input
+    <input-component
       :parent-props="$props"
       ref="input"
       @input="handleInput"
@@ -28,7 +28,7 @@ const inputFieldTemplate2 = `
           @click="handleIconClick"
         >
         </i>
-    </pe-input>      
+    </input-component>      
     <i class="el-input__icon el-icon-loading" v-if="validating"></i>
     
     <!-- Append Slot -->
@@ -37,7 +37,7 @@ const inputFieldTemplate2 = `
     </div>
   </template>
   <template v-else>
-    <pe-text-area
+    <text-area
       ref="textarea"
       :parent-props="$props"
       :styles="textareaStyle"
@@ -45,9 +45,8 @@ const inputFieldTemplate2 = `
       @focus="handleFocus"
       @blur="handleBlur"
       >
-    </pe-text-area>
+    </text-area>
   </template>
-  {{currentValue}}
 </div>
 `;
 
@@ -58,17 +57,17 @@ import Input from '../Input';
 import TextArea from '../TextArea';
 
 export default {
-  name: 'Input',
+  name: 'InputField',
 
-  componentName: 'Input',
+  componentName: 'InputField',
 
   template: inputFieldTemplate2, 
 
   mixins: [emitter],
 
   components: {
-    'pe-input': Input,
-    'pe-text-area': TextArea
+    'input-component': Input,
+    'text-area': TextArea
   },
 
   data() {

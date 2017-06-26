@@ -3,7 +3,12 @@ import {
   PopupManager
 } from './popup';
 
-const PopperJS = Vue.prototype.$isServer ? function() {} : require('./popper');
+// const PopperJS = Vue.prototype.$isServer ? function() {} : require('./popper');
+import PopperJS from 'popper.js';
+import generatePopperOnLoad from './generatePopper';
+
+console.log(PopperJS);
+
 const stop = e => e.stopPropagation();
 
 /**
@@ -70,14 +75,22 @@ export default {
 
   methods: {
     createPopper() {
+      // console.log("INSIDE Vue-popper.createPopper()");
       if (this.$isServer) return;
+
+      // set up placement of popper 
       this.currentPlacement = this.currentPlacement || this.placement;
       if (!/^(top|bottom|left|right)(-start|-end)?$/g.test(this.currentPlacement)) {
         return;
       }
 
+      // set up options
       const options = this.popperOptions;
+
+      // get the popper html element 
       const popper = this.popperElm = this.popperElm || this.popper || this.$refs.popper;
+
+      // get the ref html element 
       let reference = this.referenceElm = this.referenceElm || this.reference || this.$refs.reference;
 
       if (!reference &&
@@ -93,19 +106,33 @@ export default {
         this.popperJS.destroy();
       }
 
+      // update placement on options object 
       options.placement = this.currentPlacement;
       options.offset = this.offset;
-      this.popperJS = new PopperJS(reference, popper, options);
-      this.popperJS.onCreate(_ => {
+      options.modifiers = { generatePopper: {
+                              onLoad: generatePopperOnLoad,
+                              order: 0,
+                              enabled: true,
+                            },
+                          };
+      options.onCreate = _ => {
         this.$emit('created', this);
         this.resetTransformOrigin();
         this.$nextTick(this.updatePopper);
-      });
-      if (typeof options.onUpdate === 'function') {
-        this.popperJS.onUpdate(options.onUpdate);
+      };
+      if (typeof options.onUpdate !== 'function') {
+        options.onUpdate = (_) => {};
       }
-      this.popperJS._popper.style.zIndex = PopupManager.nextZIndex();
-      this.popperElm.addEventListener('click', stop);
+
+      // console.log("REFERENCE: ", reference);
+      // console.log("POPPER: ", popper);
+      // console.log("OPTIONS: ", options);
+      this.popperJS = new PopperJS(reference, popper, options);
+      // console.log("CREATED new Popper instance: Vue-popper.createPopper()");
+
+      // this.popperJS._popper.style.zIndex = PopupManager.nextZIndex();
+      // this.popperElm.addEventListener('click', stop);
+      // console.log("FINISHED Vue-popper.createPopper()");
     },
 
     updatePopper() {
@@ -132,9 +159,10 @@ export default {
         left: 'right',
         right: 'left'
       };
-      let placement = this.popperJS._popper.getAttribute('x-placement').split('-')[0];
+      // console.log(this.popperJS);
+      let placement = this.popperJS.popper.getAttribute('x-placement').split('-')[0];
       let origin = placementMap[placement];
-      this.popperJS._popper.style.transformOrigin = ['top', 'bottom'].indexOf(placement) > -1 ? `center ${ origin }` : `${ origin } center`;
+      this.popperJS.popper.style.transformOrigin = ['top', 'bottom'].indexOf(placement) > -1 ? `center ${ origin }` : `${ origin } center`;
     },
 
     appendArrow(element) {

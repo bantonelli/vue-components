@@ -10,6 +10,8 @@ const textAreaTemplate = `
         @cut.lazy="changed"
         @keyup="changed"
         @keydown.ctrl.alt.shift="changed"
+        @focus="handleFocus"
+        @blur="handleBlur" 
         >        
     </div>
     <span class="text-area__placeholder" v-if="placeHolder">{{placeHolder}}</span>
@@ -96,6 +98,13 @@ export default {
             }   
             this.currentValue = target.textContent;
             this.$emit('input', this.currentValue);
+        },
+        handleFocus(event) {
+            this.$emit('focus', event);
+        },
+        handleBlur(event) {
+            // emit a normal blur event 
+            this.$emit('blur', event);
         }
     }
 };

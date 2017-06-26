@@ -3,7 +3,9 @@ const inputTemplate = `
     <input 
         class="input__input" 
         v-bind="parentProps"
-        @keyup="changed"         
+        @keyup="changed"
+        @focus="handleFocus"
+        @blur="handleBlur"         
     >
     <div class="input__border"></div>
     <slot name="icon"></slot>
@@ -34,6 +36,13 @@ export default {
         changed: function (event) {
             var value = event.target.value;
             this.$emit('input', value);    
+        },
+        handleFocus(event) {
+            this.$emit('focus', event);
+        },
+        handleBlur(event) {
+            // emit a normal blur event 
+            this.$emit('blur', event);
         }
     }
 };
