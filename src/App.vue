@@ -37,13 +37,22 @@
     <span slot="prepend">PREPEND</span>
     <span slot="append">APPEND</span>
     </autocomplete>          
+
+    <input-number 
+      v-model="num1" 
+      @change="handleChange" 
+      :min="1" 
+      :max="10">
+    </input-number>
+
   </div>
 </template>
 
 <script>
 import InputField from './components/atoms/InputField/InputField';
-import Pagination from './components/molecules/Pagination/Pagination'; 
 import Autocomplete from './components/atoms/Autocomplete/Autocomplete.vue';
+import InputNumber from './components/atoms/InputNumber';
+import Pagination from './components/molecules/Pagination/Pagination'; 
 
 export default {
   name: 'app',
@@ -54,23 +63,29 @@ export default {
       pageSize: 100,
       input2: '',
       links: [],
-      state1: ''
+      state1: '',
+      num1: 1
     }
   },
   components: {
     'input-field': InputField,
     'pagination': Pagination,
-    'autocomplete': Autocomplete
+    'autocomplete': Autocomplete,
+    'input-number': InputNumber
   },
   methods: {
     handleSizeChange: function (value) {
         this.pageSize = value;
     },
     handleCurrentChange: function () {
-
+        return null;
+    },
+    handleChange(value) {
+        // for InputNumber
+        return null;
     },
     handleIconClick(ev) {
-       console.log(ev);
+        return null;
     },
     querySearch(queryString, cb) {
       var links = this.links;

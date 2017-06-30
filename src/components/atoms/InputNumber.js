@@ -1,28 +1,28 @@
 const inputNumberTemplate = ` 
-<div class="el-input-number"
+<div class="input-number"
   :class="[
-    size ? 'el-input-number--' + size : '',
+    size ? 'input-number--' + size : '',
     { 'is-disabled': disabled },
     { 'is-without-controls': !controls}
   ]"
 >
   <span
     v-if="controls"
-    class="el-input-number__decrease"
+    class="input-number__decrease"
     :class="{'is-disabled': minDisabled}"
     v-repeat-click="decrease"
   >
-    <i class="el-icon-minus"></i>
+    <i class="icon-minus"></i>
   </span>
   <span
     v-if="controls"
-    class="el-input-number__increase"
+    class="input-number__increase"
     :class="{'is-disabled': maxDisabled}"
     v-repeat-click="increase"
   >
-    <i class="el-icon-plus"></i>
+    <i class="icon-plus"></i>
   </span>
-  <pe-input
+  <input-field
     :value="currentValue"
     @keydown.up.native.prevent="increase"
     @keydown.down.native.prevent="decrease"
@@ -32,7 +32,7 @@ const inputNumberTemplate = `
     :size="size"
     :max="max"
     :min="min"
-    ref="input"
+    ref="inputField"
   >
       <template slot="prepend" v-if="$slots.prepend">
         <slot name="prepend"></slot>
@@ -40,16 +40,17 @@ const inputNumberTemplate = `
       <template slot="append" v-if="$slots.append">
         <slot name="append"></slot>
       </template> 
-  </el-input>
+  </input-field>
 </div>
 `;
 
-import Input from './Input/Input';
+import InputField from './InputField/InputField';
 import { once, on } from '../utils/dom';
 import debounce from 'throttle-debounce/debounce';
 
 export default {
     name: 'InputNumber',
+    template: inputNumberTemplate,
     directives: {
         repeatClick: {
             bind(el, binding, vnode) {
@@ -74,7 +75,7 @@ export default {
         }
     },
     components: {
-        'pe-input': Input
+        'input-field': InputField
     },
     props: {
         step: {
@@ -176,14 +177,14 @@ export default {
             this.setCurrentValue(newVal);
         },
         handleBlur() {
-            this.$refs.input.setCurrentValue(this.currentValue);
+            this.$refs.inputField.setCurrentValue(this.currentValue);
         },
         setCurrentValue(newVal) {
             const oldVal = this.currentValue;
             if (newVal >= this.max) newVal = this.max;
             if (newVal <= this.min) newVal = this.min;
             if (oldVal === newVal) {
-                this.$refs.input.setCurrentValue(this.currentValue);
+                this.$refs.inputField.setCurrentValue(this.currentValue);
                 return;
             }
             this.$emit('change', newVal, oldVal);
@@ -198,7 +199,7 @@ export default {
             if (!isNaN(newVal)) {
                 this.setCurrentValue(newVal);
             } else {
-                this.$refs.input.setCurrentValue(this.currentValue);
+                this.$refs.inputField.setCurrentValue(this.currentValue);
             }
         }
     },
