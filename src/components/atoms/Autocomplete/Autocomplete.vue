@@ -90,24 +90,28 @@
     },
     computed: {
       suggestionVisible() {
+        // When true the AutocompleteSuggestions component is shown 
         const suggestions = this.suggestions;
         let isValidData = Array.isArray(suggestions) && suggestions.length > 0;
-        // let val = (isValidData || this.loading) && this.isFocus;
-        let val = (isValidData || this.loading);
+        let val = (isValidData || this.loading) && this.isFocus;
+        // let val = (isValidData || this.loading);
         return val;
       }
     },
     watch: {
       suggestionVisible(val) {
-        // GOOD 
-        // console.log("CALLED VISIBLE METHOD");
+        // When this variable is updated send a 'visible' event 
+        // to the AutocompleteSuggestions child component.
+        // the child then displays itself (using the width value of the event payload).    
         this.broadcast('AutocompleteSuggestions', 'visible', [val, this.$refs.inputField.$refs.inputComponent.$el.offsetWidth]);    
       }
     },
     methods: {
       getData(queryString) {
+        // Set loading state of the component 
         this.loading = true;
         this.fetchSuggestions(queryString, (suggestions) => {
+          // when the suggestions are fetched run this callback and set loading to false.
           this.loading = false;
           if (Array.isArray(suggestions)) {
             this.suggestions = suggestions;

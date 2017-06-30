@@ -34,8 +34,8 @@
       placeholder="Please Input"
       @select="handleSelect"
     >
-    <!--<span slot="prepend">PREPEND</span>
-    <span slot="append">APPEND</span>-->
+    <span slot="prepend">PREPEND</span>
+    <span slot="append">APPEND</span>
     </autocomplete>          
   </div>
 </template>
