@@ -14,7 +14,7 @@
       >-->        
         <ul class="autocomplete-suggestions__wrapper">
           <template v-if="parent.loading">
-            <li><i class="el-icon-loading"></i></li>
+            <li><i class="icon-loading"></i></li>
           </template>          
           <template v-else v-for="(item, index) in suggestions">
               <li

@@ -112,7 +112,7 @@
         this.loading = true;
         this.fetchSuggestions(queryString, (suggestions) => {
           // when the suggestions are fetched run this callback and set loading to false.
-          this.loading = false;
+          this.loading = true;
           if (Array.isArray(suggestions)) {
             this.suggestions = suggestions;
           } else {

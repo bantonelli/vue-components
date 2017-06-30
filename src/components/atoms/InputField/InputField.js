@@ -18,18 +18,20 @@ const inputFieldTemplate2 = `
       @blur="handleBlur"
       >
         <!-- input icon -->
-        <i v-if="icon"
-          class="input__icon"
-          :class="[
-            icon,
-            onIconClick ? 'is-clickable' : ''
-          ]" 
-          slot="icon"        
-          @click="handleIconClick"
-        >
-        </i>
-    </input-component>      
-    <i class="el-input__icon el-icon-loading" v-if="validating"></i>
+        <template v-if="icon" slot="icon">
+          <i class="input__icon icon-loading" v-if="validating"></i>
+          <i 
+            v-else
+            class="input__icon"
+            :class="[
+              icon,
+              onIconClick ? 'is-clickable' : ''
+            ]" 
+            slot="icon"        
+            @click="handleIconClick"
+          ></i>
+        </template>
+    </input-component>          
     
     <!-- Append Slot -->
     <div class="input-field__append" v-if="$slots.append">
@@ -122,6 +124,7 @@ export default {
   computed: {
     validating() {
       return this.$parent.validateState === 'validating';
+      // return true;
     },
     textareaStyle() {
       // This computed prop is bound to the :style attribute of <textarea>
