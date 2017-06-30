@@ -9,6 +9,7 @@
     "build": "cross-env NODE_ENV=production webpack --progress --hide-modules"
   },
   "dependencies": {
+    "lodash": "^4.17.4",
     "popper.js": "^1.10.5",
     "throttle-debounce": "^1.0.1",
     "vue": "^2.3.3"

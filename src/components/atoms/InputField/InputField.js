@@ -11,7 +11,8 @@ const inputFieldTemplate2 = `
     </div>
 
     <input-component
-      :parent-props="$props"
+      :parent-props="parentProps"
+      :modifier-styles="modifierStyles"
       ref="inputComponent"
       @input="handleInput"
       @focus="handleFocus"
@@ -41,7 +42,8 @@ const inputFieldTemplate2 = `
   <template v-else>
     <text-area
       ref="textarea"
-      :parent-props="$props"
+      :parent-props="parentProps"
+      :modifier-styles="modifierStyles"
       :styles="textareaStyle"
       @input="handleInput"
       @focus="handleFocus"
@@ -57,6 +59,7 @@ import calcTextareaHeight from './calcTextareaHeight';
 import merge from '../../utils/merge';
 import Input from '../Input';
 import TextArea from '../TextArea';
+import _ from 'lodash';
 
 export default {
   name: 'InputField',
@@ -118,7 +121,11 @@ export default {
       type: Boolean,
       default: true
     },
-    onIconClick: Function
+    onIconClick: Function,
+    modifierStyles: {
+      type: Array, 
+      default: null
+    }
   },
 
   computed: {
@@ -130,6 +137,16 @@ export default {
       // This computed prop is bound to the :style attribute of <textarea>
       
       return merge({}, this.textareaCalcStyle, { resize: this.resize });
+    },
+    parentProps() {
+      // let newObject = this.$props;
+      // for(var prop in this.$props) {
+      //     if(prop === "modifierStyles"){
+
+      //     }          
+      // }
+      
+      return _.omit(this.$props, ['modifierStyles']);
     }
   },
 
@@ -183,7 +200,8 @@ export default {
       } else {
         value = event;
       }
-      // console.log("VALUE: ", value);
+      // console.log("PARENT PROPS: ", this.parentProps);
+      // console.log("PROPS: ", this.$props);
       this.$emit('input', value);
       this.setCurrentValue(value);
       this.$emit('change', value);

@@ -1,5 +1,5 @@
 const textAreaTemplate = `
-<div class="text-area" :class="classes">
+<div class="text-area" :class="modifierStyles">
     <div 
         class="text-area__input" 
         ref="input"
@@ -22,16 +22,12 @@ const textAreaTemplate = `
 export default {
     template: textAreaTemplate,
     props: {
-        classes: {
-            type: Object,
-            default: function () {
-                return {
-                    "text-area_color-invert": false
-                };
-            }
-        },
         parentProps: {
             type: Object
+        },
+        modifierStyles: {
+            type: Array, 
+            default: null
         },
         styles: {
             type: Object

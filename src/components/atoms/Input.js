@@ -1,5 +1,5 @@
 const inputTemplate = `
-<div class="input" :class="classes">
+<div class="input" :class="modifierStyles">
     <input 
         class="input__input" 
         v-bind="parentProps"
@@ -21,13 +21,9 @@ export default {
             type: String, 
             default: "Basic Text Input"
         },
-        classes: {
-            type: Object,
-            default: function () {
-                return {
-                    "input_color-invert": false
-                };
-            }
+        modifierStyles: {
+            type: Array, 
+            default: null
         },
         parentProps: {
             type: Object

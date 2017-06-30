@@ -1,20 +1,23 @@
 <template>
   <div id="app">
-    <input-field
+    <div class="dark-background">
+      <input-field
         type="textarea"
         autosize
         placeholder="Please input"
         v-model="Value"
+        :modifier-styles="['text-area_color-invert']"
       >
-    </input-field>
-
-    <input-field
-      placeholder="Pick a date"
-      icon="icon-magnifying-glass"
-      v-model="input2"
-      :on-icon-click="handleIconClick"
-      >
-    </input-field>
+      </input-field>
+      <input-field
+        placeholder="Pick a date"
+        icon="icon-magnifying-glass"
+        v-model="input2"
+        :on-icon-click="handleIconClick"
+        :modifier-styles="['input_color-invert']"
+        >
+      </input-field>
+    </div>    
 
     <pagination
       @size-change="handleSizeChange"
@@ -51,7 +54,7 @@
 <script>
 import InputField from './components/atoms/InputField/InputField';
 import Autocomplete from './components/atoms/Autocomplete/Autocomplete.vue';
-import InputNumber from './components/atoms/InputNumber';
+import InputNumber from './components/atoms/InputNumber.vue';
 import Pagination from './components/molecules/Pagination/Pagination'; 
 
 export default {
@@ -100,20 +103,6 @@ export default {
     },
     loadAll() {
       return [
-        { "value": "vue", "link": "https://github.com/vuejs/vue" },
-        { "value": "element", "link": "https://github.com/ElemeFE/element" },
-        { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-        { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-        { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-        { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-        { "value": "babel", "link": "https://github.com/babel/babel" },
-        { "value": "vue", "link": "https://github.com/vuejs/vue" },
-        { "value": "element", "link": "https://github.com/ElemeFE/element" },
-        { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },
-        { "value": "mint-ui", "link": "https://github.com/ElemeFE/mint-ui" },
-        { "value": "vuex", "link": "https://github.com/vuejs/vuex" },
-        { "value": "vue-router", "link": "https://github.com/vuejs/vue-router" },
-        { "value": "babel", "link": "https://github.com/babel/babel" },
         { "value": "vue", "link": "https://github.com/vuejs/vue" },
         { "value": "element", "link": "https://github.com/ElemeFE/element" },
         { "value": "cooking", "link": "https://github.com/ElemeFE/cooking" },

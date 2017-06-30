@@ -1,56 +1,57 @@
-const inputNumberTemplate = ` 
-<div class="input-number"
-  :class="[
-    size ? 'input-number--' + size : '',
-    { 'is-disabled': disabled },
-    { 'is-without-controls': !controls}
-  ]"
->
-  <span
-    v-if="controls"
-    class="input-number__decrease"
-    :class="{'is-disabled': minDisabled}"
-    v-repeat-click="decrease"
-  >
-    <i class="icon-minus"></i>
-  </span>
-  <span
-    v-if="controls"
-    class="input-number__increase"
-    :class="{'is-disabled': maxDisabled}"
-    v-repeat-click="increase"
-  >
-    <i class="icon-plus"></i>
-  </span>
-  <input-field
-    :value="currentValue"
-    @keydown.up.native.prevent="increase"
-    @keydown.down.native.prevent="decrease"
-    @blur="handleBlur"
-    @input="debounceHandleInput"
-    :disabled="disabled"
-    :size="size"
-    :max="max"
-    :min="min"
-    ref="inputField"
-  >
-      <template slot="prepend" v-if="$slots.prepend">
-        <slot name="prepend"></slot>
-      </template>
-      <template slot="append" v-if="$slots.append">
-        <slot name="append"></slot>
-      </template> 
-  </input-field>
-</div>
-`;
+<template>
+    <div class="input-number"
+    :class="[
+        size ? 'input-number--' + size : '',
+        { 'is-disabled': disabled },
+        { 'is-without-controls': !controls}
+    ]"
+    >
+    <span
+        v-if="controls"
+        class="input-number__decrease"
+        :class="{'is-disabled': minDisabled}"
+        v-repeat-click="decrease"
+    >
+        <i class="icon-minus"></i>
+    </span>
+    <span
+        v-if="controls"
+        class="input-number__increase"
+        :class="{'is-disabled': maxDisabled}"
+        v-repeat-click="increase"
+    >
+        <i class="icon-plus"></i>
+    </span>
+    <input-field
+        :value="currentValue"
+        @keydown.up.native.prevent="increase"
+        @keydown.down.native.prevent="decrease"
+        @blur="handleBlur"
+        @input="debounceHandleInput"
+        :disabled="disabled"
+        :size="size"
+        :max="max"
+        :min="min"
+        ref="inputField"
+    >
+        <template slot="prepend" v-if="$slots.prepend">
+            <slot name="prepend"></slot>
+        </template>
+        <template slot="append" v-if="$slots.append">
+            <slot name="append"></slot>
+        </template> 
+    </input-field>
+    </div>
+</template>
 
+<script>
 import InputField from './InputField/InputField';
 import { once, on } from '../utils/dom';
 import debounce from 'throttle-debounce/debounce';
 
 export default {
     name: 'InputNumber',
-    template: inputNumberTemplate,
+    // template: inputNumberTemplate,
     directives: {
         repeatClick: {
             bind(el, binding, vnode) {
@@ -209,3 +210,8 @@ export default {
         });
     }
 };
+</script>
+
+<style>
+
+</style>
