@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!--<input-field
+    <input-field
         type="textarea"
         autosize
         placeholder="Please input"
@@ -25,9 +25,8 @@
       layout="total, sizes, prev, pager, next, jumper"
       :total="400"
       >
-    </pagination>-->
+    </pagination>
     <autocomplete
-      class="inline-input"
       v-model="state1"
       :fetch-suggestions="querySearch"
       :trigger-on-focus="true"

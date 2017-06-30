@@ -1,7 +1,7 @@
 <template>
   <div class="autocomplete">
     <input-field
-      ref="input"
+      ref="inputField"
       :value="value"
       :disabled="disabled"
       :placeholder="placeholder"
@@ -30,6 +30,7 @@
       :props="props"
       :class="[popperClass ? popperClass : '']"
       ref="suggestions"
+      offset="5"
       :suggestions="suggestions"
     >
     </autocomplete-suggestions>
@@ -100,7 +101,7 @@
       suggestionVisible(val) {
         // GOOD 
         // console.log("CALLED VISIBLE METHOD");
-        this.broadcast('AutocompleteSuggestions', 'visible', [val, this.$refs.input.$refs.input.$el.offsetWidth]);    
+        this.broadcast('AutocompleteSuggestions', 'visible', [val, this.$refs.inputField.$refs.inputComponent.$el.offsetWidth]);    
       }
     },
     methods: {
@@ -190,7 +191,7 @@
     padding: 0 10px;
     margin: 0;
     cursor: pointer;
-    color: var(--color-extra-light-black);
+    color: black;
     font-size: 14px;
     white-space: nowrap;
     overflow: hidden;

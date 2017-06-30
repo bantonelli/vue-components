@@ -1,5 +1,6 @@
 <template>
   <!--<transition name="el-zoom-in-top" @after-leave="doDestroy">-->
+  <!-- This whole component is simply an implementation of the vue-popper mixin --> 
     <div
       v-show="showPopper"
       class="autocomplete-suggestions"
@@ -10,10 +11,12 @@
         tag="ul"
         wrap-class="el-autocomplete-suggestion__wrap"
         view-class="el-autocomplete-suggestion__list"
-      >-->
-        <li v-if="parent.loading"><i class="el-icon-loading"></i></li>
-        <ul class="autocomplete-suggestions__wrapper" v-else>
-          <template v-for="(item, index) in suggestions">
+      >-->        
+        <ul class="autocomplete-suggestions__wrapper">
+          <template v-if="parent.loading">
+            <li><i class="el-icon-loading"></i></li>
+          </template>          
+          <template v-else v-for="(item, index) in suggestions">
               <li
                 v-if="!parent.customItem"
                 class="autocomplete-suggestions__item"
@@ -97,8 +100,7 @@
 
     mounted() {
       this.popperElm = this.$el;
-      // this.referenceElm = this.$parent.$refs.input.$refs.input;
-      this.referenceElm = this.$parent.$refs.input.$refs.input.$el;
+      this.referenceElm = this.$parent.$refs.inputField.$refs.inputComponent.$refs.input.$el;
     },
 
     created() {

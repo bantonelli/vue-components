@@ -12,7 +12,7 @@ const inputFieldTemplate2 = `
 
     <input-component
       :parent-props="$props"
-      ref="input"
+      ref="inputComponent"
       @input="handleInput"
       @focus="handleFocus"
       @blur="handleBlur"
@@ -149,7 +149,7 @@ export default {
     inputSelect() {
       // select the DOM <input> 
       // using a Vue ref for easy DOM selection 
-      this.$refs.input.select();
+      this.$refs.inputComponent.select();
     },
     resizeTextarea() {
       // method to calculate text area size 

@@ -5,7 +5,8 @@ const inputTemplate = `
         v-bind="parentProps"
         @keyup="changed"
         @focus="handleFocus"
-        @blur="handleBlur"         
+        @blur="handleBlur"
+        ref="input"         
     >
     <div class="input__border"></div>
     <slot name="icon"></slot>
