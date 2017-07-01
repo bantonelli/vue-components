@@ -1,7 +1,8 @@
 <template>
     <div class="input-number"
     :class="[
-        size ? 'input-number--' + size : '',
+        modifierStyles,
+        {'focus': focused},
         { 'is-disabled': disabled },
         { 'is-without-controls': !controls}
     ]"
@@ -27,6 +28,7 @@
         @keydown.up.native.prevent="increase"
         @keydown.down.native.prevent="decrease"
         @blur="handleBlur"
+        @focus="handleFocus"
         @input="debounceHandleInput"
         :disabled="disabled"
         :size="size"
@@ -43,6 +45,59 @@
     </input-field>
     </div>
 </template>
+
+<style lang="scss">
+    .input-number {
+        height: inherit;
+        width: 100%;
+        display: inline-block;
+        position: relative;
+
+        &__decrease, &__increase {
+            cursor: pointer;
+            display: inline-block;
+            position: absolute;            
+            height: 40px;
+            width: 40px;
+            z-index: 2;
+            right: 0;
+            top: 0;
+            color: #b6b6b6; // nth($pe-greyscale-color-list, 4)
+
+            i {            
+                height: 100%;
+                width: 100%;
+                text-align: center;
+                line-height: 40px;
+            }
+        }
+
+        &__decrease {
+            transform: translateY(0%) translateX(-40px) scale(0.9, 0.9);            
+        }
+
+        &__increase {
+            transform: translateY(0%) scale(0.9, 0.9); 
+        }
+
+        &:hover,
+        &.focus,
+        &.valid {
+            .input-number__decrease, .input-number__increase {
+                color: #3fc7a6; // nth($pe-primary-color-list, 3)
+            }
+
+            .input__border {
+                border-color: #3fc7a6;
+                background-color: #3fc7a6;
+                border-width: 3px 0 3px 0;
+                border-radius: 4px;
+                outline: none;
+            }    
+        }
+    }
+
+</style>
 
 <script>
 import InputField from './InputField/InputField';
@@ -103,11 +158,16 @@ export default {
         debounce: {
             type: Number,
             default: 300
+        },
+        modifierStyles: {
+            type: Array, 
+            default: null 
         }
     },
     data() {
         return {
-            currentValue: 0
+            currentValue: 0,
+            focused: false
         };
     },
     watch: {
@@ -179,6 +239,7 @@ export default {
         },
         handleBlur() {
             this.$refs.inputField.setCurrentValue(this.currentValue);
+            this.focused = false;
         },
         setCurrentValue(newVal) {
             const oldVal = this.currentValue;
@@ -202,6 +263,9 @@ export default {
             } else {
                 this.$refs.inputField.setCurrentValue(this.currentValue);
             }
+        },
+        handleFocus() {
+            this.focused = true;
         }
     },
     created() {
@@ -212,6 +276,3 @@ export default {
 };
 </script>
 
-<style>
-
-</style>

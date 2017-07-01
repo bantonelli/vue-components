@@ -29,17 +29,21 @@
       :total="400"
       >
     </pagination>
-    <autocomplete
-      v-model="state1"
-      :fetch-suggestions="querySearch"
-      :trigger-on-focus="true"
-      icon="icon-magnifying-glass"
-      placeholder="Please Input"
-      @select="handleSelect"
-    >
-    <span slot="prepend">PREPEND</span>
-    <span slot="append">APPEND</span>
-    </autocomplete>          
+
+
+    <div style="width: 80%; margin: 0 auto;">
+      <autocomplete
+        v-model="state1"
+        :fetch-suggestions="querySearch"
+        :trigger-on-focus="true"
+        icon="icon-magnifying-glass"
+        placeholder="Please Input"
+        @select="handleSelect"
+      >
+      <span slot="prepend">PREPEND</span>
+      <span slot="append">APPEND</span>
+      </autocomplete>  
+    </div>        
 
     <input-number 
       v-model="num1" 

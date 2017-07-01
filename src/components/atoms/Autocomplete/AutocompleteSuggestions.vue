@@ -100,7 +100,8 @@
 
     mounted() {
       this.popperElm = this.$el;
-      this.referenceElm = this.$parent.$refs.inputField.$refs.inputComponent.$refs.input.$el;
+      // this.referenceElm = this.$parent.$refs.inputField.$refs.inputComponent.$refs.input.$el;
+      this.referenceElm = this.$parent.$refs.inputField.$refs.inputComponent.$el;
     },
 
     created() {

@@ -1,6 +1,10 @@
 const inputFieldTemplate2 = `
 <div :class="[type === 'textarea' ? 'text-area-field' : 'input-field',
   {
+    'input-field--appended': $slots.append,
+    'input-field--prepended': $slots.prepend,
+  },
+  {
     'is-disabled': disabled
   }
 ]">
