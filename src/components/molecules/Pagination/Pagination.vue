@@ -1,5 +1,129 @@
+<style lang="scss">
+.pagination {
+    /* display: table; */
+    position: relative;
+    white-space: normal;
+    width: 100%;
+    height: 100px;
+    padding: 20px 0 20px 0;
+    border-top: solid 2px #838383;
+    border-bottom: solid 2px #838383;
+
+    &__wrapper {
+    /* display: table-row; */
+    width: 100%;
+    text-align: center;
+    position: absolute;
+    // Z-index puts the pagination above the rest of the page
+    z-index: 1000;
+    height: 60px;
+    bottom: 0;
+    top: 50%;
+    /* padding: 20px 0 20px 0; */
+    transform: translateY(-50%);
+    }
+
+    &__sizes, &__jump, &__total, &__next, &__prev, .pager {
+        display: inline-block;
+        position: absolute;
+        bottom: 0;                      
+    }
+
+    &__next, &__prev {
+        vertical-align: middle;
+        z-index: 5;
+        top: 50%;
+        transform: translateY(-50%);
+        height: inherit;
+    }
+
+    &__sizes {
+       min-width: 15%;
+       left: 10%;
+       z-index: 4;
+       
+       .select__border {
+          border: none;          
+       }
+
+       .select__options .select__option {
+          > div {
+            width: 0%;
+            transition: .15s all ease-in-out;
+            transition-delay: 0.05s;
+          }
+
+          &:hover {
+            > div {
+                width: 80%;
+            }
+          }          
+       }
+
+       .select__placeholder, .select__options .select__option {
+          padding: 0.575rem 0.625rem 0.175rem 0.125rem;
+       }      
+    }
+
+    &__prev {
+      left: 0;
+    }
+
+    .pager {
+        left: 0%;
+        right: 0%;
+        width: 100%;
+        z-index: 3;
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &__next {
+      right: 0;      
+    }    
+
+    &__jump {
+        vertical-align: middle;
+        min-width: 100px;
+        margin-bottom: -5px;
+        right: 150px;
+        z-index: 4;
+
+        .input-number__decrease {
+            left: 40%;
+        }
+
+        .input-number__decrease {
+            right: 40%;
+        }
+
+        .input__input {
+            text-align: center;
+            bottom: 0;
+        }
+
+        .input__border {
+          border: none;
+        }
+    }
+
+
+    &__total {
+        font-family: "cabinbold";
+        color: #b6b6b6;
+        right: 50px;
+        width: 10%;
+        // color: #3fc7a6;
+    }
+}
+
+
+</style>
+
+<script>
 import Pager from './Pager';
 import Select from '../../atoms/Select';
+import InputNumber from '../../atoms/InputNumber.vue';
 // import ElSelect from 'element-ui/packages/select';
 // import ElOption from 'element-ui/packages/option';
 // import Locale from '../../mixins/locale';
@@ -55,7 +179,7 @@ export default {
     const TEMPLATE_MAP = {
       prev: <prev></prev>,
       jumper: <jumper></jumper>,
-      pager: <pager currentPage={ this.internalCurrentPage } pageCount={ this.internalPageCount } on-change={ this.handleCurrentChange }></pager>,
+      pager: <pager modifier-styles="pager_size-small" currentPage={ this.internalCurrentPage } pageCount={ this.internalPageCount } on-change={ this.handleCurrentChange }></pager>,
       next: <next></next>,
       sizes: <sizes pageSizes={ this.pageSizes }></sizes>,
       slot: <my-slot></my-slot>,
@@ -64,8 +188,8 @@ export default {
 
     // components = array of strings that correlate to keys in TEMPLATE_MAP 
     const components = layout.split(',').map((item) => item.trim());
-    const rightWrapper = <div class="pagination__rightwrapper"></div>;
-    let haveRightWrapper = false;
+    const wrapper = <div class="pagination__wrapper"></div>;
+    let haveWrapper = false;
 
     // if (this.small) {
     //   template.data.class += ' el-pagination--small';
@@ -74,19 +198,19 @@ export default {
     // Loop through components array 
     components.forEach(compo => {
       if (compo === '->') {
-        haveRightWrapper = true;
+        haveWrapper = true;
         return;
       }
 
-      if (!haveRightWrapper) {
+      if (!haveWrapper) {
         template.children.push(TEMPLATE_MAP[compo]);
       } else {
-        rightWrapper.children.push(TEMPLATE_MAP[compo]);
+        wrapper.children.push(TEMPLATE_MAP[compo]);
       }
     });
 
-    if (haveRightWrapper) {
-      template.children.unshift(rightWrapper);
+    if (haveWrapper) {
+      template.children.unshift(wrapper);
     }
 
     return template;
@@ -105,12 +229,14 @@ export default {
     Prev: {
       render(h) {
         return (
-          <button
-            type="button"
-            class={['circle-button', { disabled: this.$parent.internalCurrentPage <= 1 }]}
-            on-click={ this.$parent.prev }>
-            <span class="circle-button__text icon-arrow-left"></span>
-          </button>
+          <div class="pagination__prev">
+            <button
+              type="button"
+              class={['circle-button', { disabled: this.$parent.internalCurrentPage <= 1 }]}
+              on-click={ this.$parent.prev }>
+              <span class="circle-button__text icon-arrow-left"></span>
+            </button>
+          </div>
         );
       }
     },
@@ -118,15 +244,18 @@ export default {
     Next: {
       render(h) {
         return (
-          <button
-            type="button"
-            class={[
-              'circle-button',
-              { disabled: this.$parent.internalCurrentPage === this.$parent.internalPageCount || this.$parent.internalPageCount === 0 }
-            ]}
-            on-click={ this.$parent.next }>
-            <span class="circle-button__text icon-arrow-right"></span>
-          </button>
+          <div class="pagination__next">
+            <button
+              type="button"
+              class={[
+                // 'circle-button circle-button_size-small',
+                'circle-button',
+                { disabled: this.$parent.internalCurrentPage === this.$parent.internalPageCount || this.$parent.internalPageCount === 0 }
+              ]}
+              on-click={ this.$parent.next }>
+              <span class="circle-button__text icon-arrow-right"></span>
+            </button>
+          </div>
         );
       }
     },
@@ -154,17 +283,19 @@ export default {
 
       render(h) {
         return (
-            <pe-select
+          <div class="pagination__sizes">
+            <select-component
               placeholdertext= { this.$parent.internalPageSize }
               on-input={ this.handleChange }
               options={ this.pageSizes }              
             >
-            </pe-select>
+            </select-component>
+          </div>
         );
       },
 
       components: {
-        'pe-select': Select
+        'select-component': Select
       },
 
       methods: {
@@ -192,10 +323,18 @@ export default {
           this.oldValue = event.target.value;
         },
 
-        handleChange({ target }) {
-          this.$parent.internalCurrentPage = this.$parent.getValidCurrentPage(target.value);
-          this.oldValue = null;
+        // handleChange({ target }) {
+        //   this.$parent.internalCurrentPage = this.$parent.getValidCurrentPage(target.value);
+        //   this.oldValue = null;
+        // }
+        handleChange(value) {
+            this.$parent.internalCurrentPage = this.$parent.getValidCurrentPage(value);
+            this.oldValue = null;
         }
+      },
+
+      components: {
+        'input-number': InputNumber
       },
 
       render(h) {
@@ -214,18 +353,30 @@ export default {
         //     { this.t('el.pagination.pageClassifier') }
         //   </span>
         // );
+        // return (
+        //   <span class="pagination__jump">
+        //     <input
+        //       class="pagination__jump-input"
+        //       type="number"
+        //       min={ 1 }
+        //       max={ this.internalPageCount }
+        //       value={ this.$parent.internalCurrentPage }
+        //       on-change={ this.handleChange }
+        //       on-focus={ this.handleFocus }
+        //       number/>
+        //   </span>
+        // );
         return (
-          <span class="pagination__jump">
-            <input
-              class="pagination__jump-input"
-              type="number"
-              min={ 1 }
-              max={ this.internalPageCount }
-              value={ this.$parent.internalCurrentPage }
-              on-change={ this.handleChange }
-              on-focus={ this.handleFocus }
-              number/>
-          </span>
+            <div class="pagination__jump">
+              <input-number
+                min={ 1 }
+                max={ this.$parent.internalPageCount }
+                value={ this.$parent.internalCurrentPage }
+                on-change={ this.handleChange }
+                on-focus={ this.handleFocus }
+              >
+              </input-number>
+            </div>
         );
       }
     },
@@ -364,3 +515,4 @@ export default {
     }
   }
 };
+</script>

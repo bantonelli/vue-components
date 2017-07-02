@@ -19,17 +19,20 @@
       </input-field>
     </div>    
 
-    <pagination
-      @size-change="handleSizeChange"
-      @current-change="handleCurrentChange"
-      :current-page.sync="currentPage4"
-      :page-sizes="[50, 100, 200, 300, 400]"
-      :page-size="pageSize"
-      layout="total, sizes, prev, pager, next, jumper"
-      :total="400"
-      >
-    </pagination>
+    <div style="width: 100%; margin: 0 auto;">
+      <pagination
+        @size-change="handleSizeChange"
+        @current-change="handleCurrentChange"
+        :current-page.sync="currentPage4"
+        :page-sizes="[50, 100, 200, 300, 400]"
+        :page-size="pageSize"
+        layout="->, prev, sizes, pager, jumper, next"
+        :total="400"
+        >
+      </pagination>    
+    </div>    
 
+<!--layout="->, prev, sizes, pager, jumper, next"-->
 
     <div style="width: 80%; margin: 0 auto;">
       <autocomplete
@@ -40,8 +43,8 @@
         placeholder="Please Input"
         @select="handleSelect"
       >
-      <span slot="prepend">PREPEND</span>
-      <span slot="append">APPEND</span>
+      <!--<span slot="prepend">PREPEND</span>
+      <span slot="append">APPEND</span>-->
       </autocomplete>  
     </div>        
 
@@ -49,7 +52,9 @@
       v-model="num1" 
       @change="handleChange" 
       :min="1" 
-      :max="10">
+      :max="10"
+      :step="2"
+      :controls="false">
     </input-number>
 
   </div>
@@ -59,7 +64,7 @@
 import InputField from './components/atoms/InputField/InputField';
 import Autocomplete from './components/atoms/Autocomplete/Autocomplete.vue';
 import InputNumber from './components/atoms/InputNumber.vue';
-import Pagination from './components/molecules/Pagination/Pagination'; 
+import Pagination from './components/molecules/Pagination/Pagination.vue'; 
 
 export default {
   name: 'app',
