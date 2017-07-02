@@ -52,9 +52,7 @@
       v-model="num1" 
       @change="handleChange" 
       :min="1" 
-      :max="10"
-      :step="2"
-      :controls="false">
+      :max="10">
     </input-number>
 
   </div>

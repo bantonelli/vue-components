@@ -60,7 +60,11 @@
           }          
        }
 
-       .select__placeholder, .select__options .select__option {
+       .select__placeholder {
+          padding: 0.625rem 0.625rem 0.625rem 0.125rem;
+       }
+
+       .select__options .select__option {
           padding: 0.575rem 0.625rem 0.175rem 0.125rem;
        }      
     }
