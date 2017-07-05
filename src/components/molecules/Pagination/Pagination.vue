@@ -188,7 +188,7 @@ export default {
     const TEMPLATE_MAP = {
       prev: <prev></prev>,
       jumper: <jumper></jumper>,
-      pager: <pager modifier-styles="pager_size-small" currentPage={ this.internalCurrentPage } pageCount={ this.internalPageCount } on-change={ this.handleCurrentChange }></pager>,
+      pager: <pager modifier-styles={["pager_size-small"]} currentPage={ this.internalCurrentPage } pageCount={ this.internalPageCount } on-change={ this.handleCurrentChange }></pager>,
       next: <next></next>,
       sizes: <sizes pageSizes={ this.pageSizes }></sizes>,
       slot: <my-slot></my-slot>,
@@ -241,7 +241,7 @@ export default {
           <div class="pagination__prev">
             <button
               type="button"
-              class={['circle-button', { disabled: this.$parent.internalCurrentPage <= 1 }]}
+              class={['circle-button', { 'is-disabled': this.$parent.internalCurrentPage <= 1 }]}
               on-click={ this.$parent.prev }>
               <span class="circle-button__text icon-arrow-left"></span>
             </button>
@@ -259,7 +259,7 @@ export default {
               class={[
                 // 'circle-button circle-button_size-small',
                 'circle-button',
-                { disabled: this.$parent.internalCurrentPage === this.$parent.internalPageCount || this.$parent.internalPageCount === 0 }
+                { 'is-disabled': this.$parent.internalCurrentPage === this.$parent.internalPageCount || this.$parent.internalPageCount === 0 }
               ]}
               on-click={ this.$parent.next }>
               <span class="circle-button__text icon-arrow-right"></span>

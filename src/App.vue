@@ -55,6 +55,29 @@
       :max="10">
     </input-number>
 
+    <radio-group v-model="radio">
+        <radio
+          label="1"
+          id="'Checkbox1'"
+          disabled
+        >
+          Option A
+        </radio>
+
+        <radio      
+          label="2"
+          id="'Checkbox2'"
+        >
+          Option B
+        </radio>
+
+        <radio      
+          label="3"
+          id="'Checkbox3'"
+        >
+          Option C
+        </radio>
+    </radio-group>
   </div>
 </template>
 
@@ -62,7 +85,9 @@
 import InputField from './components/atoms/InputField/InputField';
 import Autocomplete from './components/atoms/Autocomplete/Autocomplete.vue';
 import InputNumber from './components/atoms/InputNumber.vue';
-import Pagination from './components/molecules/Pagination/Pagination.vue'; 
+import Pagination from './components/molecules/Pagination/Pagination.vue';
+import Radio from './components/atoms/Radio/Radio.vue'; 
+import RadioGroup from './components/atoms/Radio/RadioGroup.vue';
 
 export default {
   name: 'app',
@@ -74,14 +99,17 @@ export default {
       input2: '',
       links: [],
       state1: '',
-      num1: 1
+      num1: 1,
+      radio: '1'
     }
   },
   components: {
     'input-field': InputField,
     'pagination': Pagination,
     'autocomplete': Autocomplete,
-    'input-number': InputNumber
+    'input-number': InputNumber,
+    'radio': Radio,
+    'radio-group': RadioGroup
   },
   methods: {
     handleSizeChange: function (value) {
