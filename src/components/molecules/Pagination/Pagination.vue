@@ -10,38 +10,45 @@
     border-bottom: solid 2px #838383;
 
     &__wrapper {
-    /* display: table-row; */
-    width: 100%;
-    text-align: center;
-    position: absolute;
-    // Z-index puts the pagination above the rest of the page
-    z-index: 1000;
-    height: 60px;
-    bottom: 0;
-    top: 50%;
-    /* padding: 20px 0 20px 0; */
-    transform: translateY(-50%);
+        /* display: table-row; */
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        // Z-index puts the pagination above the rest of the page
+        z-index: 1000;
+        height: 60px;
     }
 
     &__sizes, &__jump, &__total, &__next, &__prev, .pager {
         display: inline-block;
-        position: absolute;
-        bottom: 0;                      
+        position: absolute;                  
+    }
+
+    &__wrapper, &__next, &__prev, .pager {
+        top: 50%;
+        transform: translateY(-50%);
+    }
+
+    &__sizes, &__jump {
+        bottom: 50%;
+        transform: translateY(50%);
     }
 
     &__next, &__prev {
         vertical-align: middle;
         z-index: 5;
-        top: 50%;
-        transform: translateY(-50%);
         height: inherit;
+
+        .circle-button {
+          margin: 2px 0 0 0;
+        }
     }
 
     &__sizes {
        min-width: 15%;
        left: 10%;
        z-index: 4;
-       
+
        .select__border {
           border: none;          
        }
@@ -78,8 +85,6 @@
         right: 0%;
         width: 100%;
         z-index: 3;
-        top: 50%;
-        transform: translateY(-50%);
     }
 
     &__next {
@@ -89,7 +94,7 @@
     &__jump {
         vertical-align: middle;
         min-width: 100px;
-        margin-bottom: -5px;
+        margin-bottom: -2px;
         right: 150px;
         z-index: 4;
 
