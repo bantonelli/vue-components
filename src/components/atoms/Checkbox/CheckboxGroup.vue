@@ -25,7 +25,7 @@
 
     watch: {
       value(value) {
-        console.log("Changed group value");
+        // console.log("Changed group value", value);
         this.dispatch('FormItem', 'form.change', [value]);
       }
     }

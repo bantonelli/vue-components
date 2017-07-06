@@ -85,11 +85,11 @@
           // if using group emit input on group and let v-model 
           // handle addition or removal of :value from array.                  
 
-          console.log("Setting model", val);
+          // console.log("Setting model", val);
           // gets the model of the checkbox 
           if (this.isGroup) {
             // this.model is an array if group            
-            console.log("Setting model as group");
+            // console.log("Setting model as group");
             let isLimitExceeded = false;
             (this._checkboxGroup.min !== undefined &&
               val.length < this._checkboxGroup.min &&
@@ -107,7 +107,7 @@
 
           } else if (this.value !== undefined) {
             // If not group and doesn't have trueLabel||falseLabel
-            console.log("Setting model as single", val);
+            // console.log("Setting model as single", val);
             this.$emit('input', val);
           } else {
             // If not group and has trueLabel||falseLabel
