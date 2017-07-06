@@ -2,6 +2,7 @@
 <div 
     class="radio" 
     :class="{
+        modifierStyles,
         'is-disabled': isDisabled,
         'is-checked': model === label,
         'is-focus': focus
@@ -42,7 +43,11 @@
       value: {},
       label: {},
       disabled: Boolean,
-      name: String
+      name: String,
+      modifierStyles: {
+        type: Array, 
+        default: null
+      }
     },
 
     data() {

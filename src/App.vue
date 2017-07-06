@@ -58,7 +58,7 @@
     <radio-group v-model="radio">
         <radio
           label="1"
-          id="'Checkbox1'"
+          id="'Radio1'"
           disabled
         >
           Option A
@@ -66,18 +66,34 @@
 
         <radio      
           label="2"
-          id="'Checkbox2'"
+          id="'Radio2'"
         >
           Option B
         </radio>
 
         <radio      
           label="3"
-          id="'Checkbox3'"
+          id="'Radio3'"
         >
           Option C
         </radio>
     </radio-group>
+
+    <checkbox
+      v-model="checked"
+      id="Checkbox1"
+    >
+    Stuff
+    </checkbox>
+
+    <checkbox-group v-model="checkList">
+      <checkbox label="Option A" id="'CheckboxA'"></checkbox>
+      <checkbox label="Option B" id="'CheckboxB'"></checkbox>
+      <checkbox label="Option C" id="'CheckboxC'"></checkbox>
+      <checkbox label="disabled" id="'CheckboxD'" disabled></checkbox>
+      <checkbox label="selected and disabled" id="'CheckboxE'" disabled></checkbox>
+    </checkbox-group>
+
   </div>
 </template>
 
@@ -88,6 +104,8 @@ import InputNumber from './components/atoms/InputNumber.vue';
 import Pagination from './components/molecules/Pagination/Pagination.vue';
 import Radio from './components/atoms/Radio/Radio.vue'; 
 import RadioGroup from './components/atoms/Radio/RadioGroup.vue';
+import Checkbox from './components/atoms/Checkbox/Checkbox.vue';
+import CheckboxGroup from './components/atoms/Checkbox/CheckboxGroup.vue';
 
 export default {
   name: 'app',
@@ -100,7 +118,9 @@ export default {
       links: [],
       state1: '',
       num1: 1,
-      radio: '1'
+      radio: '1',
+      checked: false,
+      checkList: ['selected and disabled','Option A']
     }
   },
   components: {
@@ -109,7 +129,9 @@ export default {
     'autocomplete': Autocomplete,
     'input-number': InputNumber,
     'radio': Radio,
-    'radio-group': RadioGroup
+    'radio-group': RadioGroup,
+    'checkbox': Checkbox,
+    'checkbox-group': CheckboxGroup
   },
   methods: {
     handleSizeChange: function (value) {
