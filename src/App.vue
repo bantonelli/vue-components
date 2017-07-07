@@ -55,7 +55,7 @@
       :max="10">
     </input-number>
 
-    <radio-group v-model="radio">
+    <!--<radio-group v-model="radio">
         <radio
           label="1"
           id="'Radio1'"
@@ -92,7 +92,18 @@
       <checkbox label="Option C" id="'CheckboxC'"></checkbox>
       <checkbox label="disabled" id="'CheckboxD'" disabled></checkbox>
       <checkbox label="selected and disabled" id="'CheckboxE'" disabled></checkbox>
-    </checkbox-group>
+    </checkbox-group>-->
+
+    <select-component 
+      v-model="selectValue" placeholder="Select"
+    >
+      <select-option
+        v-for="item in options"
+        :key="item.value"
+        :label="item.label"
+        :value="item.value">
+      </select-option>
+    </select-component>
 
   </div>
 </template>
@@ -106,6 +117,8 @@ import Radio from './components/atoms/Radio/Radio.vue';
 import RadioGroup from './components/atoms/Radio/RadioGroup.vue';
 import Checkbox from './components/atoms/Checkbox/Checkbox.vue';
 import CheckboxGroup from './components/atoms/Checkbox/CheckboxGroup.vue';
+import Select from './components/atoms/Select/Select.vue';
+import Option from './components/atoms/Select/Option.vue';
 
 export default {
   name: 'app',
@@ -120,7 +133,24 @@ export default {
       num1: 1,
       radio: '1',
       checked: false,
-      checkList: ['selected and disabled','Option A']
+      checkList: ['selected and disabled','Option A'],
+      options: [{
+        value: 'Option1',
+        label: 'Option1'
+      }, {
+        value: 'Option2',
+        label: 'Option2'
+      }, {
+        value: 'Option3',
+        label: 'Option3'
+      }, {
+        value: 'Option4',
+        label: 'Option4'
+      }, {
+        value: 'Option5',
+        label: 'Option5'
+      }],
+      selectValue: ''
     }
   },
   components: {
@@ -131,7 +161,9 @@ export default {
     'radio': Radio,
     'radio-group': RadioGroup,
     'checkbox': Checkbox,
-    'checkbox-group': CheckboxGroup
+    'checkbox-group': CheckboxGroup,
+    'select-component': Select,
+    'select-option': Option
   },
   methods: {
     handleSizeChange: function (value) {
