@@ -94,18 +94,27 @@
       <checkbox label="selected and disabled" id="'CheckboxE'" disabled></checkbox>
     </checkbox-group>-->
 
-    <select-component 
-      v-model="selectValue" placeholder="Select"
-    >
-      <select-option
-        v-for="item in options"
-        :key="item.value"
-        :label="item.label"
-        :value="item.value">
-      </select-option>
-    </select-component>
-
+  
+    <div style="width: 200px; margin: 0 auto;">
+      <select-component 
+        v-model="selectValue" 
+        placeholder="Select"
+        multiple
+        filterable
+      >
+        <select-option
+          v-for="item in options"
+          :key="item.value"
+          :label="item.label"
+          :value="item.value"
+          :disabled="false">
+          <!--<span style="float: left">{{ item.label }}</span>
+          <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>-->
+        </select-option>
+      </select-component>
+    </div>
   </div>
+
 </template>
 
 <script>
@@ -139,7 +148,8 @@ export default {
         label: 'Option1'
       }, {
         value: 'Option2',
-        label: 'Option2'
+        label: 'Option2',
+        disabled: true
       }, {
         value: 'Option3',
         label: 'Option3'

@@ -1,6 +1,6 @@
 <template>
   <div
-    class="select-dropdown"
+    class="select__dropdown"
     :class="[{ 'is-multiple': $parent.multiple }, popperClass]"
     :style="{ minWidth: minWidth }">
     <slot></slot>

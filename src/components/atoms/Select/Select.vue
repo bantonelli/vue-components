@@ -1,6 +1,7 @@
 <template>
   <div
     class="select"
+    :class="modifierStyles"
     v-clickoutside="handleClose">
     <!-- MULTIPLE SELECT / TAGS -->
     <div
@@ -24,7 +25,7 @@
 
       <input
         type="text"
-        class="el-select__input"
+        class="select__filter-input"
         :class="`is-${ size }`"
         @focus="visible = true"
         :disabled="disabled"
@@ -43,9 +44,11 @@
     </div>
     <!-- END TAGS -->
     <input-field
+      class="select__input"
       ref="reference"
       v-model="selectedLabel"
       type="text"
+      :modifier-styles="inputModifierStyles"
       :placeholder="currentPlaceholder"
       :name="name"
       :size="size"
@@ -72,16 +75,11 @@
       @after-enter="handleMenuEnter">
       <select-menu
         ref="popper"
-        v-show="visible && emptyText !== false">
-        <!--<el-scrollbar
-          tag="ul"
-          wrap-class="el-select-dropdown__wrap"
-          view-class="el-select-dropdown__list"
-          :class="{ 'is-empty': !allowCreate && filteredOptionsCount === 0 }"
-          v-show="options.length > 0 && !loading">-->
+        v-show="visible && emptyText !== false"
+        :class="modifierStyles">
           <ul
-            class="select-dropdown__wrap select__options"
-            :class="{ 'is-empty': !allowCreate && filteredOptionsCount === 0 }"
+            class="select__options"
+            :class="[{ 'is-empty': !allowCreate && filteredOptionsCount === 0 }]"
             v-show="options.length > 0 && !loading" 
           >
             <select-option
@@ -91,8 +89,7 @@
             </select-option>
             <slot></slot>
           </ul>
-        <!--</el-scrollbar>-->
-        <p class="select-dropdown__empty" v-if="emptyText && (allowCreate && options.length === 0 || !allowCreate)">{{ emptyText }}</p>
+        <p class="select__empty" v-if="emptyText && (allowCreate && options.length === 0 || !allowCreate)">{{ emptyText }}</p>
       </select-menu>
     </transition>
   </div>
@@ -130,7 +127,7 @@
           !this.multiple &&
           this.value !== undefined &&
           this.value !== '';
-        return criteria ? 'circle-close is-show-close' : (this.remote && this.filterable ? '' : 'caret-top');
+        return criteria ? 'icon-circle-close is-show-close' : (this.remote && this.filterable ? '' : 'icon-up-down-arrow');
       },
 
       // DONE **** 
@@ -205,7 +202,15 @@
           return 'Select Placeholder';
         }
       },
-      defaultFirstOption: Boolean
+      defaultFirstOption: Boolean,
+      modifierStyles: {
+        type: Array, 
+        default: null
+      },
+      inputModifierStyles: {
+        type: Array, 
+        default: null
+      }
     },
 
     data() {
@@ -393,7 +398,7 @@
       // DONE ******
       handleMenuEnter() {
         if (!this.dropdownUl) {
-          this.dropdownUl = this.$refs.popper.$el.querySelector('.select-dropdown__wrap');
+          this.dropdownUl = this.$refs.popper.$el.querySelector('.select__options');
           this.getOverflows();
         }
         if (!this.multiple && this.dropdownUl) {
@@ -539,9 +544,17 @@
       resetInputHeight() {
         this.$nextTick(() => {
           if (!this.$refs.reference) return;
-          let inputChildNodes = this.$refs.reference.$el.childNodes;
-          let input = [].filter.call(inputChildNodes, item => item.tagName === 'INPUT')[0];
-          input.style.height = Math.max(this.$refs.tags.clientHeight + 6, sizeMap[this.size] || 36) + 'px';
+          // let inputChildNodes = this.$refs.reference.$el.childNodes;
+          // console.log("INPUT CHILD NODES", inputChildNodes);
+          // Change logic to use selector. 
+          // let input = [].filter.call(inputChildNodes, item => item.tagName === 'INPUT')[0];
+          let input = this.$refs.reference.$el.querySelector('input');
+          let inputComponent = this.$refs.reference.$el.querySelector('.input');
+          // console.log("INPUT ", input);
+          var newHeight = Math.max(this.$refs.tags.clientHeight + 6, sizeMap[this.size] || 40) + 'px';
+          input.style.height = newHeight;
+          inputComponent.style.height = newHeight;
+
           if (this.visible && this.emptyText !== false) {
             this.broadcast('SelectDropdown', 'updatePopper');
           }
