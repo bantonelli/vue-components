@@ -548,8 +548,10 @@
           // console.log("INPUT CHILD NODES", inputChildNodes);
           // Change logic to use selector. 
           // let input = [].filter.call(inputChildNodes, item => item.tagName === 'INPUT')[0];
-          let input = this.$refs.reference.$el.querySelector('input');
-          let inputComponent = this.$refs.reference.$el.querySelector('.input');
+          // let input = this.$refs.reference.$el.querySelector('input');
+          let input = this.$refs.reference.$refs.inputComponent.$refs.input;
+          // let inputComponent = this.$refs.reference.$el.querySelector('.input');
+          let inputComponent = this.$refs.reference.$refs.inputComponent.$el;
           // console.log("INPUT ", input);
           var newHeight = Math.max(this.$refs.tags.clientHeight + 6, sizeMap[this.size] || 40) + 'px';
           input.style.height = newHeight;
