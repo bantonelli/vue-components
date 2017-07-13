@@ -55,10 +55,11 @@
       :max="10">
     </input-number>
 
-    <!--<radio-group v-model="radio">
+    <radio-group v-model="radio">
         <radio
           label="1"
           id="'Radio1'"
+          modifier-styles="radio_size-large"
           disabled
         >
           Option A
@@ -87,12 +88,12 @@
     </checkbox>
 
     <checkbox-group v-model="checkList">
-      <checkbox label="Option A" id="'CheckboxA'"></checkbox>
+      <checkbox label="Option A" id="'CheckboxA'" modifier-styles="checkbox_size-large"></checkbox>
       <checkbox label="Option B" id="'CheckboxB'"></checkbox>
       <checkbox label="Option C" id="'CheckboxC'"></checkbox>
       <checkbox label="disabled" id="'CheckboxD'" disabled></checkbox>
       <checkbox label="selected and disabled" id="'CheckboxE'" disabled></checkbox>
-    </checkbox-group>-->
+    </checkbox-group>
 
   
     <div style="width: 200px; margin: 0 auto;">

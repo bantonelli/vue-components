@@ -1,12 +1,14 @@
 <template>
 <div 
     class="radio" 
-    :class="{
-        modifierStyles,
+    :class="[
+      modifierStyles,
+      {        
         'is-disabled': isDisabled,
         'is-checked': model === label,
         'is-focus': focus
-    }"
+      }
+    ]"
   >
     <input 
       class="radio__input" 

@@ -1,13 +1,15 @@
 <template>
   <div 
     class="checkbox" 
-    :class="{
-      modifierStyles,
-      'is-disabled': disabled,
-      'is-checked': isChecked,
-      'is-indeterminate': indeterminate,
-      'is-focus': focus
-    }"
+    :class="[
+      modifierStyles, 
+      {      
+        'is-disabled': disabled,
+        'is-checked': isChecked,
+        'is-indeterminate': indeterminate,
+        'is-focus': focus
+      }
+    ]"
   >
       <input 
         v-if="trueLabel || falseLabel"
