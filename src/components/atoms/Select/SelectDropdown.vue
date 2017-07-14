@@ -55,8 +55,12 @@
     },
 
     mounted() {
-      this.referenceElm = this.$parent.$refs.reference.$el;
+      // this.referenceElm = this.$parent.$refs.reference.$el;
+      // this.$parent.popperElm = this.popperElm = this.$el;
+      console.log("Reference Element Mounted", this.$parent.$refs);
+      this.referenceElm = this.$parent.$refs.reference.$el;      
       this.$parent.popperElm = this.popperElm = this.$el;
+
       this.$on('updatePopper', () => {
         if (this.$parent.visible) this.updatePopper();
       });

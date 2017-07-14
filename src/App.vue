@@ -55,7 +55,7 @@
       :max="10">
     </input-number>
 
-    <radio-group v-model="radio">
+    <!--<radio-group v-model="radio">
         <radio
           label="1"
           id="'Radio1'"
@@ -93,15 +93,17 @@
       <checkbox label="Option C" id="'CheckboxC'"></checkbox>
       <checkbox label="disabled" id="'CheckboxD'" disabled></checkbox>
       <checkbox label="selected and disabled" id="'CheckboxE'" disabled></checkbox>
-    </checkbox-group>
+    </checkbox-group>-->
 
   
     <div style="width: 200px; margin: 0 auto;">
-      <select-component 
+      <!--<select-component 
         v-model="selectValue" 
         placeholder="Select"
-        multiple
+        multiple 
         filterable
+        allow-create
+        :loading="loading"
       >
         <select-option
           v-for="item in options"
@@ -109,10 +111,29 @@
           :label="item.label"
           :value="item.value"
           :disabled="false">
-          <!--<span style="float: left">{{ item.label }}</span>
-          <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>-->
+          <span style="float: left">{{ item.label }}</span>
+          <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
         </select-option>
+      </select-component>-->
+      <select-component
+        v-model="selectValue"
+        placeholder="Select Groups"
+      >
+        <option-group
+          v-for="group in groupOptions"
+          :key="group.label"
+          :label="group.label"
+        >
+          <select-option
+            v-for="item in group.options"
+            :key="item.value"
+            :label="item.label"
+            :value="item.value"
+          >
+          </select-option>
+        </option-group>
       </select-component>
+
     </div>
   </div>
 
@@ -129,6 +150,7 @@ import Checkbox from './components/atoms/Checkbox/Checkbox.vue';
 import CheckboxGroup from './components/atoms/Checkbox/CheckboxGroup.vue';
 import Select from './components/atoms/Select/Select.vue';
 import Option from './components/atoms/Select/Option.vue';
+import OptionGroup from './components/atoms/Select/OptionGroup.vue';
 
 export default {
   name: 'app',
@@ -144,24 +166,73 @@ export default {
       radio: '1',
       checked: false,
       checkList: ['selected and disabled','Option A'],
-      options: [{
-        value: 'Option1',
-        label: 'Option1'
-      }, {
-        value: 'Option2',
-        label: 'Option2',
-        disabled: true
-      }, {
-        value: 'Option3',
-        label: 'Option3'
-      }, {
-        value: 'Option4',
-        label: 'Option4'
-      }, {
-        value: 'Option5',
-        label: 'Option5'
-      }],
-      selectValue: ''
+      options: [
+        {
+          value: 'Option1',
+          label: 'Option1'
+        }, {
+          value: 'Option2',
+          label: 'Option2',
+          disabled: true
+        }, {
+          value: 'Option3',
+          label: 'Option3'
+        }, {
+          value: 'Option4',
+          label: 'Option4'
+        }, {
+          value: 'Option5',
+          label: 'Option5'
+        }
+      ],
+      selectValue: [],
+      remoteOptions: [],
+      remoteSelectList: [],
+      loading: false,
+      states: ["Alabama", "Alaska", "Arizona",
+      "Arkansas", "California", "Colorado",
+      "Connecticut", "Delaware", "Florida",
+      "Georgia", "Hawaii", "Idaho", "Illinois",
+      "Indiana", "Iowa", "Kansas", "Kentucky",
+      "Louisiana", "Maine", "Maryland",
+      "Massachusetts", "Michigan", "Minnesota",
+      "Mississippi", "Missouri", "Montana",
+      "Nebraska", "Nevada", "New Hampshire",
+      "New Jersey", "New Mexico", "New York",
+      "North Carolina", "North Dakota", "Ohio",
+      "Oklahoma", "Oregon", "Pennsylvania",
+      "Rhode Island", "South Carolina",
+      "South Dakota", "Tennessee", "Texas",
+      "Utah", "Vermont", "Virginia",
+      "Washington", "West Virginia", "Wisconsin",
+      "Wyoming"],
+      groupOptions: [
+        {
+          label: 'Popular cities',
+          options: [{
+            value: 'Shanghai',
+            label: 'Shanghai'
+          }, {
+            value: 'Beijing',
+            label: 'Beijing'
+          }]
+        }, {
+          label: 'City name',
+          options: [{
+            value: 'Chengdu',
+            label: 'Chengdu'
+          }, {
+            value: 'Shenzhen',
+            label: 'Shenzhen'
+          }, {
+            value: 'Guangzhou',
+            label: 'Guangzhou'
+          }, {
+            value: 'Dalian',
+            label: 'Dalian'
+          }]
+        }
+      ]
     }
   },
   components: {
@@ -174,6 +245,7 @@ export default {
     'checkbox': Checkbox,
     'checkbox-group': CheckboxGroup,
     'select-component': Select,
+    'option-group': OptionGroup,
     'select-option': Option
   },
   methods: {
@@ -214,11 +286,27 @@ export default {
     },
     handleSelect(item) {
       console.log(item);
+    },
+    remoteMethod(query) {
+      if (query !== '') {
+        this.loading = true;
+        setTimeout(() => {
+          this.loading = false;
+          this.remoteOptions = this.remoteSelectList.filter(item => {
+            return item.label.toLowerCase()
+              .indexOf(query.toLowerCase()) > -1;
+          });
+        }, 200);
+      } else {
+        this.remoteOptions = [];
+      }
     }
-
   },
   mounted() {
     this.links = this.loadAll();
+    this.remoteSelectList = this.states.map(item => {
+      return { value: item, label: item };
+    });
   }
 }
 </script>

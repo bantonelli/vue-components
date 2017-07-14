@@ -26,7 +26,6 @@
       <input
         type="text"
         class="select__filter-input"
-        :class="`is-${ size }`"
         @focus="visible = true"
         :disabled="disabled"
         @keyup="managePlaceholder"
@@ -51,7 +50,6 @@
       :modifier-styles="inputModifierStyles"
       :placeholder="currentPlaceholder"
       :name="name"
-      :size="size"
       :disabled="disabled"
       :readonly="!filterable || multiple"
       :validate-event="false"
@@ -106,11 +104,11 @@
   import { addClass, removeClass, hasClass } from '../../utils/dom';
   import { addResizeListener, removeResizeListener } from '../../utils/resize-event';
   
-  const sizeMap = {
-    'large': 42,
-    'small': 30,
-    'mini': 22
-  };
+  // const sizeMap = {
+  //   'large': 42,
+  //   'small': 30,
+  //   'mini': 22
+  // };
 
   export default {
     mixins: [Emitter],
@@ -128,6 +126,7 @@
           this.value !== undefined &&
           this.value !== '';
         return criteria ? 'icon-circle-close is-show-close' : (this.remote && this.filterable ? '' : 'icon-up-down-arrow');
+        // return criteria ? 'icon-circle-close is-show-close' : 'icon-up-down-arrow';
       },
 
       // DONE **** 
@@ -177,8 +176,7 @@
       name: String,
       value: {
         required: true
-      },
-      size: String,
+      },      
       disabled: Boolean,
       clearable: Boolean,
       filterable: Boolean,
@@ -545,15 +543,14 @@
         this.$nextTick(() => {
           if (!this.$refs.reference) return;
           // let inputChildNodes = this.$refs.reference.$el.childNodes;
-          // console.log("INPUT CHILD NODES", inputChildNodes);
           // Change logic to use selector. 
           // let input = [].filter.call(inputChildNodes, item => item.tagName === 'INPUT')[0];
           // let input = this.$refs.reference.$el.querySelector('input');
           let input = this.$refs.reference.$refs.inputComponent.$refs.input;
           // let inputComponent = this.$refs.reference.$el.querySelector('.input');
           let inputComponent = this.$refs.reference.$refs.inputComponent.$el;
-          // console.log("INPUT ", input);
-          var newHeight = Math.max(this.$refs.tags.clientHeight + 6, sizeMap[this.size] || 40) + 'px';
+          // var newHeight = Math.max(this.$refs.tags.clientHeight + 6, sizeMap[this.size] || 40) + 'px';
+          var newHeight = Math.max(this.$refs.tags.clientHeight + 6, 40) + 'px';
           input.style.height = newHeight;
           inputComponent.style.height = newHeight;
 
