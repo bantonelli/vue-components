@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="dark-background">
+    <!--<div class="dark-background">
       <input-field
         type="textarea"
         autosize
@@ -32,7 +32,7 @@
       </pagination>    
     </div>    
 
-<!--layout="->, prev, sizes, pager, jumper, next"-->
+layout="->, prev, sizes, pager, jumper, next"
 
     <div style="width: 80%; margin: 0 auto;">
       <autocomplete
@@ -43,8 +43,8 @@
         placeholder="Please Input"
         @select="handleSelect"
       >
-      <!--<span slot="prepend">PREPEND</span>
-      <span slot="append">APPEND</span>-->
+      <span slot="prepend">PREPEND</span>
+      <span slot="append">APPEND</span>
       </autocomplete>  
     </div>        
 
@@ -53,7 +53,7 @@
       @change="handleChange" 
       :min="1" 
       :max="10">
-    </input-number>
+    </input-number>-->
 
     <!--<radio-group v-model="radio">
         <radio
@@ -115,7 +115,7 @@
           <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
         </select-option>
       </select-component>-->
-      <select-component
+      <!--<select-component
         v-model="selectValue"
         placeholder="Select Groups"
       >
@@ -132,11 +132,13 @@
           >
           </select-option>
         </option-group>
-      </select-component>
+      </select-component>-->
 
     </div>
-  </div>
+    
+    <form-demo></form-demo>
 
+  </div>
 </template>
 
 <script>
@@ -151,6 +153,7 @@ import CheckboxGroup from './components/atoms/Checkbox/CheckboxGroup.vue';
 import Select from './components/atoms/Select/Select.vue';
 import Option from './components/atoms/Select/Option.vue';
 import OptionGroup from './components/atoms/Select/OptionGroup.vue';
+import FormDemo from './components/FormDemo.vue';
 
 export default {
   name: 'app',
@@ -246,7 +249,8 @@ export default {
     'checkbox-group': CheckboxGroup,
     'select-component': Select,
     'option-group': OptionGroup,
-    'select-option': Option
+    'select-option': Option,
+    'form-demo': FormDemo
   },
   methods: {
     handleSizeChange: function (value) {

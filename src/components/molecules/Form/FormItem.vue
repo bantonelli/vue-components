@@ -1,31 +1,44 @@
 <template>
-  <div class="el-form-item" :class="{
+  <div class="form-item" :class="{
     'is-error': validateState === 'error',
     'is-validating': validateState === 'validating',
     'is-required': isRequired || required
   }">
-    <label :for="prop" class="el-form-item__label" v-bind:style="labelStyle" v-if="label">
+    <label :for="prop" class="form-item__label" v-bind:style="labelStyle" v-if="label">
       <slot name="label">{{label + form.labelSuffix}}</slot>
     </label>
-    <div class="el-form-item__content" v-bind:style="contentStyle">
+    <div class="form-item__content" v-bind:style="contentStyle">
+      <!-- The input item slots in here -->
       <slot></slot>
       <transition name="el-zoom-in-top">
-        <div class="el-form-item__error" v-if="validateState === 'error' && showMessage && form.showMessage">{{validateMessage}}</div>
+        <!-- The validation error message -->
+        <div class="form-item__error" v-if="validateState === 'error' && showMessage && form.showMessage">{{validateMessage}}</div>
       </transition>
     </div>
   </div>
 </template>
 <script>
   import AsyncValidator from 'async-validator';
-  import emitter from 'element-ui/src/mixins/emitter';
+  import emitter from '../../utils/mixins/emitter';
 
   function noop() {}
 
   function getPropByPath(obj, path) {
+    // obj == model (the object that contains all form-item props)
+    // path == the string of the prop to validate 
     let tempObj = obj;
+
+    // convert indexes to properties: object[index] --> object.index
+      // Replace all alphanumeric characters between brackets 
+      // with a period preceding the same chars ($1)          
     path = path.replace(/\[(\w+)\]/g, '.$1');
+
+    // Remove leading period: .stuff --> stuff
     path = path.replace(/^\./, '');
 
+    // Create new array 
+    // Each index of this array is a piece of path string 
+      // when path is split at each period  
     let keyArr = path.split('.');
     let i = 0;
 
@@ -45,9 +58,9 @@
   }
 
   export default {
-    name: 'ElFormItem',
+    name: 'FormItem',
 
-    componentName: 'ElFormItem',
+    componentName: 'FormItem',
 
     mixins: [emitter],
 
@@ -65,15 +78,21 @@
       }
     },
     watch: {
+      // Error message to show for the form item
+        // Updates validateMessage
+      // *** NOTHING TO CHANGE
       error(value) {
         this.validateMessage = value;
         this.validateState = value ? 'error' : '';
       },
+      // *** NOTHING TO CHANGE      
       validateStatus(value) {
         this.validateState = value;
       }
     },
     computed: {
+      // Sets up the label style for the form item dynamically (form-item__label)
+      // *** NOTHING TO CHANGE   
       labelStyle() {
         var ret = {};
         if (this.form.labelPosition === 'top') return ret;
@@ -83,6 +102,8 @@
         }
         return ret;
       },
+
+      // Sets up the style for the input wrapper. (form-item__content) 
       contentStyle() {
         var ret = {};
         if (this.form.labelPosition === 'top' || this.form.inline) return ret;
@@ -92,24 +113,36 @@
         }
         return ret;
       },
+      // Computed prop that returns parent Form component.  
       form() {
         var parent = this.$parent;
-        while (parent.$options.componentName !== 'ElForm') {
+        while (parent.$options.componentName !== 'Form') {
           parent = parent.$parent;
         }
         return parent;
       },
+      // Value used to validate against. 
       fieldValue: {
         cache: false,
         get() {
+          // When field value is accessed the model used here is just an alias of the parent's model. 
           var model = this.form.model;
+
+          // If no parent and no prop property return nothing.
+          // this.prop is used when there is validation            
           if (!model || !this.prop) { return; }
 
+          // prop is the dataProp from the Vue form that should be validated by the form-item
+          // set path to be this prop. (Example: "name")   
           var path = this.prop;
+
+          // If path has a colon replace it with a . 
           if (path.indexOf(':') !== -1) {
             path = path.replace(/:/, '.');
           }
 
+          // Pass model (the object that contains all form-item props)
+          // Pass path (the string of the prop to validate)           
           return getPropByPath(model, path).v;
         }
       }
@@ -198,7 +231,7 @@
     },
     mounted() {
       if (this.prop) {
-        this.dispatch('ElForm', 'el.form.addField', [this]);
+        this.dispatch('Form', 'form.addField', [this]);
 
         let initialValue = this.fieldValue;
         if (Array.isArray(initialValue)) {
@@ -217,13 +250,13 @@
               return false;
             }
           });
-          this.$on('el.form.blur', this.onFieldBlur);
-          this.$on('el.form.change', this.onFieldChange);
+          this.$on('form.blur', this.onFieldBlur);
+          this.$on('form.change', this.onFieldChange);
         }
       }
     },
     beforeDestroy() {
-      this.dispatch('ElForm', 'el.form.removeField', [this]);
+      this.dispatch('Form', 'form.removeField', [this]);
     }
   };
 </script>
