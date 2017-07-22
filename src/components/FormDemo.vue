@@ -1,11 +1,11 @@
 <template>
 <div id="form-demo" style="width: 50%; margin: 0 auto;">
-    <form-component ref="form" :model="form" labwidth="120px" label-position="left">
-        <form-item label="Activity name">
+    <form-component ref="form" :model="form" label-width="120px" label-position="left" :rules="rules">
+        <form-item label="Activity name" prop="name">
             <input-field v-model="form.name" placeholder="Enter your activity name"></input-field>
         </form-item>
-        <form-item label="Activity zone">
-            <select-component v-model="form.region" placeholder="please select your zone">
+        <form-item label="Activity zone" prop="region">
+            <select-component v-model="form.region" placeholder="please select your zone" clearable>
             <select-option label="Zone one" value="shanghai"></select-option>
             <select-option label="Zone two" value="beijing"></select-option>
             </select-component>
@@ -22,7 +22,7 @@
         <!--<form-item label="Instant delivery">
             <switch on-text="" off-text="" v-model="form.delivery"></switch>
         </form-item>-->
-        <form-item label="Activity type">
+        <form-item label="Activity type" prop="type">
             <checkbox-group v-model="form.type">
                 <checkbox id="'online-activities'" label="Online-activities" name="type"></checkbox>
                 <checkbox id="'promotion-activities'" label="Promotion-activities" name="type"></checkbox>
@@ -37,12 +37,10 @@
             </radio-group>
         </form-item>
         <form-item label="Activity form">
-            <input-field type="textarea" v-model="form.desc" placeholder="Describe your activity"></input-field>
+            <input-field type="textarea" v-model="form.desc" placeholder="Describe your activity" autosize></input-field>
         </form-item>
-        <form-item>
-            <button type="primary" @click="onSubmit">Create</button>
-            <button>Cancel</button>
-        </form-item>
+        <button class="button button_color-primary" type="primary" @click="onSubmit"><span class="button__text">Create</span></button>
+        <button class="button button_color-accent"><span class="button__text">Cancel</span></button>
     </form-component>
 </div>
 </template>
@@ -72,6 +70,18 @@ import FormItem from './molecules/Form/FormItem.vue';
           type: [],
           resource: '',
           desc: ''
+        },
+        rules: {
+            name: [
+                {required: true, message: 'Please input Activity name', trigger: 'blur'},
+                {min: 3, message: 'At least 3 characters are required', trigger: 'change'}
+            ],
+            region: [
+                {required: true, message: 'Please select Activity zone', trigger: 'change'}
+            ],
+            type: [
+                {type: 'array', required: true, message: 'Please select at least one activity type', trigger: 'change'}
+            ]
         }
       }
     },
@@ -94,3 +104,73 @@ import FormItem from './molecules/Form/FormItem.vue';
     }
   }
 </script>
+
+<style lang="scss">
+#form-demo {
+    .checkbox-group {
+        .checkbox {
+            display: inline-block;
+            width: 45%;                   
+        }
+    }
+    .radio-group {        
+        .radio {
+            margin: 10px 0 0 0;
+            display: inline-block;
+            width: 45%;                   
+        }
+    }
+    .select {
+        max-width: 100%;
+    }
+    .form-item {
+        position: relative;
+
+        .form-item__label {
+            z-index: 2;
+            background: white;
+            padding: 12px 6px 12px 6px;
+            // color: #BC61A8; // nth($pe-primary-color-list, 3)
+            color: #505050;
+            font-family: "cabinbold";
+        }
+    }
+
+    .form {    
+        &_label-left {
+            .form-item {
+                padding: 20px 10px;
+                margin: 10px 0;
+            }
+            .form-item__label {
+                left: 0;
+                text-align: left;
+            }
+        }
+        &_label-right {
+            .form-item {
+                padding: 20px 10px;
+                margin: 10px 0;
+            }
+            .form-item__label {
+                left: 0;
+                text-align: right;                
+            }
+        }  
+        &_label-top {
+            .form-item {
+                padding: 20px 10px;
+                margin: 30px 0;
+                border-top: 1px solid transparentize(#b6b6b6, 0.5); // nth($pe-greyscale-color-list, 4);
+                border-radius: 0px; 
+            }
+            .form-item__label {
+                top: -25px;
+            }
+        }
+    }
+}
+
+
+
+</style>

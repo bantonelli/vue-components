@@ -1,7 +1,11 @@
 const textAreaTemplate = `
 <div class="text-area" :class="modifierStyles">
     <div 
-        class="text-area__input" 
+        class="text-area__input"
+        :class="{
+            'is-valid': isValid,
+            'is-invalid': isInvalid
+        }"  
         ref="input"
         contenteditable="true"
         v-bind="parentProps"
@@ -31,6 +35,14 @@ export default {
         },
         styles: {
             type: Object
+        },
+        isValid: {
+            type: Boolean,
+            default: false
+        },
+        isInvalid: {
+            type: Boolean,
+            default: false
         }
     },
     data: function () {

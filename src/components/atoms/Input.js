@@ -1,7 +1,11 @@
 const inputTemplate = `
 <div class="input" :class="modifierStyles">
     <input 
-        class="input__input" 
+        class="input__input"
+        :class="{
+            'is-valid': isValid,
+            'is-invalid': isInvalid
+        }" 
         v-bind="parentProps"
         @keyup="changed"
         @focus="handleFocus"
@@ -27,6 +31,14 @@ export default {
         },
         parentProps: {
             type: Object
+        },
+        isValid: {
+            type: Boolean,
+            default: false
+        },
+        isInvalid: {
+            type: Boolean,
+            default: false
         }
     },
     methods: {

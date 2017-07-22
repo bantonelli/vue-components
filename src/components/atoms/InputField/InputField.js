@@ -17,6 +17,8 @@ const inputFieldTemplate2 = `
     <input-component
       :parent-props="parentProps"
       :modifier-styles="modifierStyles"
+      :is-valid="isValid"
+      :is-invalid="isInvalid"      
       ref="inputComponent"
       @input="handleInput"
       @focus="handleFocus"
@@ -48,6 +50,8 @@ const inputFieldTemplate2 = `
       ref="textarea"
       :parent-props="parentProps"
       :modifier-styles="modifierStyles"
+      :is-valid="isValid"
+      :is-invalid="isInvalid"
       :styles="textareaStyle"
       @input="handleInput"
       @focus="handleFocus"
@@ -149,8 +153,35 @@ export default {
 
       //     }          
       // }
-      
       return _.omit(this.$props, ['modifierStyles']);
+    },
+    isValid() {
+      if (this.$parent.validateState) {
+        // For normal inputs 
+        // form-item >> input-field
+        return this.$parent.validateState === 'success';
+      } 
+      else if (this.$parent.$parent.validateState) {
+        // For select component 
+        // form-item >> select >> input-field
+        return this.$parent.$parent.validateState === 'success';
+      } else {
+        return false;
+      }      
+    },
+    isInvalid() {
+      if (this.$parent.validateState) {
+        // For normal inputs 
+        // form-item >> input-field
+        return this.$parent.validateState === 'error';
+      } 
+      else if (this.$parent.$parent.validateState) {
+        // For select component 
+        // form-item >> select >> input-field
+        return this.$parent.$parent.validateState === 'error';
+      } else {
+        return false;
+      }  
     }
   },
 

@@ -1,6 +1,6 @@
 <template>
   <form class="form" :class="[
-    labelPosition ? 'form--label-' + labelPosition : '',
+    labelPosition ? 'form_label-' + labelPosition : '',
     { 'el-form--inline': inline }
   ]">
     <slot></slot>
@@ -83,3 +83,30 @@
     }
   };
 </script>
+
+<style lang="scss">
+
+/*.form {    
+  &_label-left {
+    .form-item__label {
+      left: 0;
+      text-align: left;
+    }
+  }
+  &_label-right {
+    .form-item__label {
+      left: 0;
+      text-align: right;
+    }
+  }  
+  &_label-top {
+    .form-item {
+      padding-top: 40px;
+    }
+    .form-item__label {
+      top: 0px;
+    }
+  }
+}*/
+
+</style>

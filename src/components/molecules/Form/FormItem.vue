@@ -10,10 +10,8 @@
     <div class="form-item__content" v-bind:style="contentStyle">
       <!-- The input item slots in here -->
       <slot></slot>
-      <transition name="el-zoom-in-top">
-        <!-- The validation error message -->
-        <div class="form-item__error" v-if="validateState === 'error' && showMessage && form.showMessage">{{validateMessage}}</div>
-      </transition>
+      <!-- The validation error message -->
+      <div class="form-item__error" v-if="validateState === 'error' && showMessage && form.showMessage">{{validateMessage}}</div>
     </div>
   </div>
 </template>
@@ -260,3 +258,28 @@
     }
   };
 </script>
+
+<style lang="scss">
+
+  .form-item {
+    position: relative;
+    &__label {
+      position: absolute;
+      vertical-align: middle;
+      font-size: 16px;
+      padding: 12px 6px 12px 0;
+    }
+    &__content {
+      
+    }
+    &__error {
+      position: absolute;
+      z-index: 1;
+      font-size: 12px;
+      color: red;
+      // color: #BC61A8;
+      padding: 10px 10px;
+    }
+  }
+
+</style>
