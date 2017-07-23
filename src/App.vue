@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!--<div class="dark-background">
+    <div class="dark-background">
       <input-field
         type="textarea"
         autosize
@@ -32,8 +32,6 @@
       </pagination>    
     </div>    
 
-layout="->, prev, sizes, pager, jumper, next"
-
     <div style="width: 80%; margin: 0 auto;">
       <autocomplete
         v-model="state1"
@@ -43,8 +41,8 @@ layout="->, prev, sizes, pager, jumper, next"
         placeholder="Please Input"
         @select="handleSelect"
       >
-      <span slot="prepend">PREPEND</span>
-      <span slot="append">APPEND</span>
+        <span slot="prepend">PREPEND</span>
+        <span slot="append">APPEND</span>
       </autocomplete>  
     </div>        
 
@@ -53,13 +51,13 @@ layout="->, prev, sizes, pager, jumper, next"
       @change="handleChange" 
       :min="1" 
       :max="10">
-    </input-number>-->
+    </input-number>
 
-    <!--<radio-group v-model="radio">
+    <radio-group v-model="radio">
         <radio
           label="1"
           id="'Radio1'"
-          modifier-styles="radio_size-large"
+          :modifier-styles="['radio_size-large']"
           disabled
         >
           Option A
@@ -88,16 +86,16 @@ layout="->, prev, sizes, pager, jumper, next"
     </checkbox>
 
     <checkbox-group v-model="checkList">
-      <checkbox label="Option A" id="'CheckboxA'" modifier-styles="checkbox_size-large"></checkbox>
+      <checkbox label="Option A" id="'CheckboxA'" :modifier-styles="['checkbox_size-large']"></checkbox>
       <checkbox label="Option B" id="'CheckboxB'"></checkbox>
       <checkbox label="Option C" id="'CheckboxC'"></checkbox>
       <checkbox label="disabled" id="'CheckboxD'" disabled></checkbox>
       <checkbox label="selected and disabled" id="'CheckboxE'" disabled></checkbox>
-    </checkbox-group>-->
+    </checkbox-group>
 
   
     <div style="width: 200px; margin: 0 auto;">
-      <!--<select-component 
+      <select-component 
         v-model="selectValue" 
         placeholder="Select"
         multiple 
@@ -114,7 +112,7 @@ layout="->, prev, sizes, pager, jumper, next"
           <span style="float: left">{{ item.label }}</span>
           <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
         </select-option>
-      </select-component>-->
+      </select-component>
       <!--<select-component
         v-model="selectValue"
         placeholder="Select Groups"
@@ -142,17 +140,18 @@ layout="->, prev, sizes, pager, jumper, next"
 </template>
 
 <script>
-import InputField from './components/atoms/InputField/InputField';
-import Autocomplete from './components/atoms/Autocomplete/Autocomplete.vue';
-import InputNumber from './components/atoms/InputNumber.vue';
-import Pagination from './components/molecules/Pagination/Pagination.vue';
-import Radio from './components/atoms/Radio/Radio.vue'; 
-import RadioGroup from './components/atoms/Radio/RadioGroup.vue';
-import Checkbox from './components/atoms/Checkbox/Checkbox.vue';
-import CheckboxGroup from './components/atoms/Checkbox/CheckboxGroup.vue';
-import Select from './components/atoms/Select/Select.vue';
-import Option from './components/atoms/Select/Option.vue';
-import OptionGroup from './components/atoms/Select/OptionGroup.vue';
+import Radio from './components/atoms/Radio/Radio'; // Done
+import RadioGroup from './components/atoms/Radio/RadioGroup'; // Done
+import Checkbox from './components/atoms/Checkbox/Checkbox'; // Done
+import CheckboxGroup from './components/atoms/Checkbox/CheckboxGroup'; // Done
+import InputField from './components/molecules/InputField/InputField'; // Done
+import Autocomplete from './components/molecules/Autocomplete/Autocomplete'; // Done
+import InputNumber from './components/molecules/InputNumber/InputNumber'; // Done
+import Select from './components/molecules/EnhancedSelect/EnhancedSelect'; // Done
+import Option from './components/molecules/EnhancedSelect/Option'; // Done
+import OptionGroup from './components/molecules/EnhancedSelect/OptionGroup'; // Done
+import Pagination from './components/organisms/Pagination/Pagination';
+import Tag from './components/atoms/Tag/Tag';
 import FormDemo from './components/FormDemo.vue';
 
 export default {
@@ -314,4 +313,6 @@ export default {
   }
 }
 </script>
-<style src="./assets/css/style.css"></style>
+
+
+

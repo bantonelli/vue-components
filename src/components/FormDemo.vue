@@ -5,7 +5,7 @@
             <input-field v-model="form.name" placeholder="Enter your activity name"></input-field>
         </form-item>
         <form-item label="Activity zone" prop="region">
-            <select-component v-model="form.region" placeholder="please select your zone" clearable>
+            <select-component v-model="form.region" placeholder="please select your zone" multiple>
             <select-option label="Zone one" value="shanghai"></select-option>
             <select-option label="Zone two" value="beijing"></select-option>
             </select-component>
@@ -47,16 +47,16 @@
 
 
 <script>
-import InputField from './atoms/InputField/InputField';
-import Radio from './atoms/Radio/Radio.vue'; 
-import RadioGroup from './atoms/Radio/RadioGroup.vue';
-import Checkbox from './atoms/Checkbox/Checkbox.vue';
-import CheckboxGroup from './atoms/Checkbox/CheckboxGroup.vue';
-import Select from './atoms/Select/Select.vue';
-import Option from './atoms/Select/Option.vue';
-import OptionGroup from './atoms/Select/OptionGroup.vue';
-import Form from './molecules/Form/Form.vue';
-import FormItem from './molecules/Form/FormItem.vue';
+import Radio from './atoms/Radio/Radio'; 
+import RadioGroup from './atoms/Radio/RadioGroup';
+import Checkbox from './atoms/Checkbox/Checkbox';
+import CheckboxGroup from './atoms/Checkbox/CheckboxGroup';
+import InputField from './molecules/InputField/InputField';
+import Select from './molecules/EnhancedSelect/EnhancedSelect';
+import Option from './molecules/EnhancedSelect/Option';
+import OptionGroup from './molecules/EnhancedSelect/OptionGroup';
+import Form from './organisms/Form/Form'; // Done
+import FormItem from './organisms/Form/FormItem'; // Done
 
   export default {
     data() {
