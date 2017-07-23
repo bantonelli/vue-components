@@ -48,9 +48,9 @@
 
 <script>
 import Radio from './atoms/Radio/Radio'; 
-import RadioGroup from './atoms/Radio/RadioGroup';
 import Checkbox from './atoms/Checkbox/Checkbox';
-import CheckboxGroup from './atoms/Checkbox/CheckboxGroup';
+import RadioGroup from './molecules/RadioGroup/RadioGroup';
+import CheckboxGroup from './molecules/CheckboxGroup/CheckboxGroup';
 import InputField from './molecules/InputField/InputField';
 import Select from './molecules/EnhancedSelect/EnhancedSelect';
 import Option from './molecules/EnhancedSelect/Option';

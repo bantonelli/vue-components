@@ -141,9 +141,9 @@
 
 <script>
 import Radio from './components/atoms/Radio/Radio'; // Done
-import RadioGroup from './components/atoms/Radio/RadioGroup'; // Done
 import Checkbox from './components/atoms/Checkbox/Checkbox'; // Done
-import CheckboxGroup from './components/atoms/Checkbox/CheckboxGroup'; // Done
+import RadioGroup from './components/molecules/RadioGroup/RadioGroup'; // Done
+import CheckboxGroup from './components/molecules/CheckboxGroup/CheckboxGroup'; // Done
 import InputField from './components/molecules/InputField/InputField'; // Done
 import Autocomplete from './components/molecules/Autocomplete/Autocomplete'; // Done
 import InputNumber from './components/molecules/InputNumber/InputNumber'; // Done
