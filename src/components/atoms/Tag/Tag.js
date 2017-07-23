@@ -19,7 +19,6 @@ export default {
   props: {
     text: String,
     closable: Boolean,
-    type: String,
     hit: Boolean,
     closeTransition: Boolean,
     color: String,
