@@ -19,9 +19,8 @@ export default {
   props: {
     text: String,
     closable: Boolean,
-    hit: Boolean,
     closeTransition: Boolean,
-    color: String,
+    hit: Boolean,
     modifierStyles: {
       type: Array, 
       default: null
