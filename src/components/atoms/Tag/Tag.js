@@ -17,7 +17,6 @@ export default {
   template: tagTemplate,
 
   props: {
-    text: String,
     closable: Boolean,
     closeTransition: Boolean,
     hit: Boolean,
