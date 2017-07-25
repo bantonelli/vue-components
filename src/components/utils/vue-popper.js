@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import {
   PopupManager
-} from './popup';
+} from './popup/index';
 
 // const PopperJS = Vue.prototype.$isServer ? function() {} : require('./popper');
 import PopperJS from 'popper.js';
