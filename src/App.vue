@@ -1,6 +1,10 @@
 <template>
   <div id="app">
     <div class="dark-background">
+      <input-component
+        :modifier-styles="['input_color-invert']"
+      >
+      </input-component>
       <input-field
         type="textarea"
         autosize
@@ -17,6 +21,7 @@
         :modifier-styles="['input_color-invert']"
         >
       </input-field>
+
     </div>    
 
     <div style="width: 100%; margin: 0 auto;">
@@ -142,6 +147,7 @@
 <script>
 import Radio from './components/atoms/Radio/Radio'; // Done
 import Checkbox from './components/atoms/Checkbox/Checkbox'; // Done
+import Input from './components/atoms/Input';
 import RadioGroup from './components/molecules/RadioGroup/RadioGroup'; // Done
 import CheckboxGroup from './components/molecules/CheckboxGroup/CheckboxGroup'; // Done
 import InputField from './components/molecules/InputField/InputField'; // Done
@@ -238,6 +244,7 @@ export default {
     }
   },
   components: {
+    'input-component': Input,
     'input-field': InputField,
     'pagination': Pagination,
     'autocomplete': Autocomplete,
