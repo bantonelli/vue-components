@@ -44,9 +44,8 @@ let enhancedSelectTemplate = `
       type="text"
       class="select__filter-input"
       @focus="visible = true"
-      :disabled="disabled"
-      @keyup="managePlaceholder"
-      @keydown="resetInputState"
+      :disabled="disabled"      
+      @keyup="managePlaceholder"      
       @keydown.down.prevent="navigateOptions('next')"
       @keydown.up.prevent="navigateOptions('prev')"
       @keydown.enter.prevent="selectOption"
@@ -55,9 +54,12 @@ let enhancedSelectTemplate = `
       v-model="query"
       :debounce="remote ? 300 : 0"
       v-if="filterable"
-      :style="{ width: inputLength + 'px', 'max-width': inputWidth - 42 + 'px' }"
+      :style="{ 'max-width': inputWidth - 42 + 'px'}"    
       ref="input">
   </div>
+  <!-- OLD STYLE BINDING 
+  :style="{ width: inputLength + 'px', 'max-width': inputWidth - 42 + 'px' }"
+   -->
   <!-- END TAGS -->
   <input-field
     class="select__input"
@@ -91,7 +93,8 @@ let enhancedSelectTemplate = `
     <select-menu
       ref="popper"
       v-show="visible && emptyText !== false"
-      :class="modifierStyles">
+      :class="modifierStyles"     
+      >
         <ul
           class="select__options"
           :class="[{ 'is-empty': !allowCreate && filteredOptionsCount === 0 }]"
@@ -547,10 +550,10 @@ export default {
         // let inputChildNodes = this.$refs.reference.$el.childNodes;
         // Change logic to use selector. 
         // let input = [].filter.call(inputChildNodes, item => item.tagName === 'INPUT')[0];
-        // let input = this.$refs.reference.$el.querySelector('input');
-        let input = this.$refs.reference.$refs.inputComponent.$refs.input;
-        // let inputComponent = this.$refs.reference.$el.querySelector('.input');
-        let inputComponent = this.$refs.reference.$refs.inputComponent.$el;
+        let input = this.$refs.reference.$el.querySelector('input');
+        // let input = this.$refs.reference.$refs.inputComponent.$refs.input;
+        let inputComponent = this.$refs.reference.$el.querySelector('.input');
+        // let inputComponent = this.$refs.reference.$refs.inputComponent.$el;
         // var newHeight = Math.max(this.$refs.tags.clientHeight + 6, sizeMap[this.size] || 40) + 'px';
         var newHeight = Math.max(this.$refs.tags.clientHeight + 6, 40) + 'px';
         input.style.height = newHeight;
@@ -558,7 +561,7 @@ export default {
 
         if (this.visible && this.emptyText !== false) {
           this.broadcast('SelectDropdown', 'updatePopper');
-        }
+        }              
       });
     },
 
