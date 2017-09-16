@@ -307,7 +307,7 @@ export default {
         this.handleIconHide();
 
         // Destroy Popper  
-        this.broadcast('SelectDropdown', 'destroyPopper');
+        // this.broadcast('SelectDropdown', 'destroyPopper');
 
         // Blur tag input 
         if (this.$refs.input) {
@@ -773,6 +773,9 @@ export default {
 
   // OK ******
   beforeDestroy() {
-    if (this.$el && this.handleResize) removeResizeListener(this.$el, this.handleResize);
+    if (this.$el && this.handleResize) {
+      this.broadcast('SelectDropdown', 'destroyPopper');
+      removeResizeListener(this.$el, this.handleResize);
+    }
   }
 };

@@ -54,6 +54,6 @@ export default {
     });
 
     // destroyPopper event comes from Enhanced Select
-    this.$on('destroyPopper', this.doClose());
+    this.$on('destroyPopper', this.doDestroy());
   }
 };
