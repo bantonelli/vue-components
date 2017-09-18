@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="dark-background">
+    <!--<div class="dark-background">
       <input-component
         :modifier-styles="['input_color-invert']"
       >
@@ -118,7 +118,7 @@
           <span style="float: right; color: #8492a6; font-size: 13px">{{ item.value }}</span>
         </select-option>
       </select-component>
-      <!--<select-component
+      <select-component
         v-model="selectValue"
         placeholder="Select Groups"
       >
@@ -135,11 +135,17 @@
           >
           </select-option>
         </option-group>
-      </select-component>-->
+      </select-component>
 
     </div>
     
-    <form-demo></form-demo>
+    <form-demo></form-demo>-->
+
+    
+    <mobile-nav>
+      <navbar></navbar>
+    </mobile-nav>
+    <!--<div style="height: 60px; width: 100%; background-color: #9d9d9d;"></div>-->
 
   </div>
 </template>
@@ -148,6 +154,7 @@
 import Radio from './components/atoms/Radio/Radio'; // Done
 import Checkbox from './components/atoms/Checkbox/Checkbox'; // Done
 import Input from './components/atoms/Input';
+import Tag from './components/atoms/Tag/Tag';
 import RadioGroup from './components/molecules/RadioGroup/RadioGroup'; // Done
 import CheckboxGroup from './components/molecules/CheckboxGroup/CheckboxGroup'; // Done
 import InputField from './components/molecules/InputField/InputField'; // Done
@@ -156,8 +163,9 @@ import InputNumber from './components/molecules/InputNumber/InputNumber'; // Don
 import Select from './components/molecules/EnhancedSelect/EnhancedSelect'; // Done
 import Option from './components/molecules/EnhancedSelect/Option'; // Done
 import OptionGroup from './components/molecules/EnhancedSelect/OptionGroup'; // Done
+import MobileNav from './components/molecules/MobileNav/MobileNav';
+import Navbar from './components/molecules/Navbar/Navbar';
 import Pagination from './components/organisms/Pagination/Pagination';
-import Tag from './components/atoms/Tag/Tag';
 import FormDemo from './components/FormDemo.vue';
 
 export default {
@@ -256,7 +264,9 @@ export default {
     'select-component': Select,
     'option-group': OptionGroup,
     'select-option': Option,
-    'form-demo': FormDemo
+    'form-demo': FormDemo,
+    'mobile-nav': MobileNav,
+    'navbar': Navbar
   },
   methods: {
     handleSizeChange: function (value) {
