@@ -33,13 +33,15 @@ export default {
        },
        links: {
            type: Array,
-           default: [
-               {text: "Home", url: "#"},
-               {text: "Video Library", url: "#"},
-               {text: "Account Settings", url: "#"},
-               {text: "Profile", url: "#"},
-               {text: "Log Out", url: "#"}
-           ]
+           default: function () {
+               return [
+                    {text: "Home", url: "#"},
+                    {text: "Video Library", url: "#"},
+                    {text: "Account Settings", url: "#"},
+                    {text: "Profile", url: "#"},
+                    {text: "Log Out", url: "#"}
+                ];
+           }
        } 
     },
     data: function () {
