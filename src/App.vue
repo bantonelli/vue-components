@@ -142,10 +142,14 @@
     <form-demo></form-demo>-->
 
     
-    <mobile-nav>
+    <!--<mobile-nav>
       <navbar></navbar>
-    </mobile-nav>
+    </mobile-nav>-->
     <!--<div style="height: 60px; width: 100%; background-color: #9d9d9d;"></div>-->
+
+    <dropdown
+    >
+    </dropdown>
 
   </div>
 </template>
@@ -165,6 +169,7 @@ import Option from './components/molecules/EnhancedSelect/Option'; // Done
 import OptionGroup from './components/molecules/EnhancedSelect/OptionGroup'; // Done
 import MobileNav from './components/molecules/MobileNav/MobileNav';
 import Navbar from './components/molecules/Navbar/Navbar';
+import Dropdown from './components/molecules/Dropdown/Dropdown';
 import Pagination from './components/organisms/Pagination/Pagination';
 import FormDemo from './components/FormDemo.vue';
 
@@ -266,7 +271,8 @@ export default {
     'select-option': Option,
     'form-demo': FormDemo,
     'mobile-nav': MobileNav,
-    'navbar': Navbar
+    'navbar': Navbar,
+    'dropdown': Dropdown
   },
   methods: {
     handleSizeChange: function (value) {
