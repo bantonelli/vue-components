@@ -119,7 +119,7 @@
         </select-option>
       </select-component>
       <select-component
-        v-model="selectValue"
+        v-model="selectValueGroup"
         placeholder="Select Groups"
       >
         <option-group
@@ -207,6 +207,7 @@ export default {
         }
       ],
       selectValue: [],
+      selectValueGroup: "",
       remoteOptions: [],
       remoteSelectList: [],
       loading: false,

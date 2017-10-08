@@ -5,12 +5,12 @@ import DropdownMenu from './DropdownMenu';
 
 let dropdownTemplate = `
 <div 
-  :class="classes"
-  ref="reference"
+  :class="classes"  
   v-clickoutside="handleClose"
   >
     <div 
-      class="dropdown__label"       
+      class="dropdown__label"
+      ref="reference"       
     >
         Really Long Username
     </div>  
@@ -124,7 +124,6 @@ export default {
   methods: {
     handleClose() {
       // console.log("CALLED Clickoutside"); >> WORKED
-      console.log(this.$refs.reference);
       this.visible = false;
     },
     handleOpen() {
