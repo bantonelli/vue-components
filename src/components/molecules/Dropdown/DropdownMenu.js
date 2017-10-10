@@ -3,9 +3,7 @@ import Popper from '../../utils/vue-popper2';
 
 let dropdownMenuTemplate = `
 <div class="dropdown__menu" @click="menuClick">
-    <a href="#" class="dropdown__menu-header">Home</a>
-        <slot></slot>
-    <a href="#" class="dropdown__menu-footer">Log Out</a>
+    <slot></slot>    
 </div>
 `;
 
@@ -55,6 +53,10 @@ export default {
     // // destroyPopper event comes from Enhanced Select
     // this.$on('destroyPopper', this.doDestroy());
 
-    console.log(this.$parent);
+    // console.log(this.$parent);
+  },
+
+  beforeDestroy() {
+    console.log("DROPDOWN MENU DESTROYED");
   }
 };

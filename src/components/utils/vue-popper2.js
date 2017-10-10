@@ -44,6 +44,10 @@ export default {
             type: Boolean,
             default: true
         },
+        arrowClass: {
+            type: String,
+            default: 'popper__arrow'
+        },
         transition: {
             type: String,
             default: ''
@@ -176,7 +180,7 @@ export default {
             this.appended = true;
             const arrow = document.createElement('div');
             arrow.setAttribute('x-arrow', '');
-            arrow.className = 'popper__arrow';
+            arrow.className = this.arrowClass;
             element.appendChild(arrow);
         },
         updatePopper() {

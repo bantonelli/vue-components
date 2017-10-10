@@ -147,10 +147,39 @@
     </mobile-nav>-->
     <!--<div style="height: 60px; width: 100%; background-color: #9d9d9d;"></div>-->
 
-    <dropdown
-    >
-    </dropdown>
-
+    <div style="width: 300px;">
+      <dropdown
+        style="background-color: blue;"
+        :visible-arrow="true"
+        :arrow-class="'dropdown__menu-arrow'"
+        :label="'Dropdown Label'"
+        :variation-class="'dropdown--navbar'"
+        :show-header="true"
+        :show-footer="true"
+        :popper-options="{
+            placement: 'auto', 
+            offsets: {
+              arrow: {
+                top: 0,
+                left: 0
+              }
+            }
+          }"
+      > 
+        <template slot="header">
+            <a href="#">Home</a>
+        </template>       
+        <dropdown-menu-item>
+          <a href="#">Settings</a>
+        </dropdown-menu-item>
+        <dropdown-menu-item>
+          <a href="#">Profile</a>
+        </dropdown-menu-item>
+        <template slot="footer">
+            <a href="#">Log Out</a>
+        </template>       
+      </dropdown>
+    </div>
   </div>
 </template>
 
@@ -170,6 +199,7 @@ import OptionGroup from './components/molecules/EnhancedSelect/OptionGroup'; // 
 import MobileNav from './components/molecules/MobileNav/MobileNav';
 import Navbar from './components/molecules/Navbar/Navbar';
 import Dropdown from './components/molecules/Dropdown/Dropdown';
+import DropdownMenuItem from './components/molecules/Dropdown/DropdownMenuItem';
 import Pagination from './components/organisms/Pagination/Pagination';
 import FormDemo from './components/FormDemo.vue';
 
@@ -273,7 +303,8 @@ export default {
     'form-demo': FormDemo,
     'mobile-nav': MobileNav,
     'navbar': Navbar,
-    'dropdown': Dropdown
+    'dropdown': Dropdown,
+    'dropdown-menu-item': DropdownMenuItem
   },
   methods: {
     handleSizeChange: function (value) {
