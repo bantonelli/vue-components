@@ -142,12 +142,12 @@
     <form-demo></form-demo>-->
 
     
-    <!--<mobile-nav>
+    <mobile-nav>
       <navbar></navbar>
-    </mobile-nav>-->
+    </mobile-nav>
     <!--<div style="height: 60px; width: 100%; background-color: #9d9d9d;"></div>-->
 
-    <div style="width: 300px;">
+    <!--<div style="width: 300px;">
       <dropdown
         style="background-color: blue;"
         :visible-arrow="true"
@@ -179,7 +179,7 @@
             <a href="#">Log Out</a>
         </template>       
       </dropdown>
-    </div>
+    </div>-->
   </div>
 </template>
 

@@ -1,3 +1,6 @@
+import UsernameDropdown from './UsernameDropdown';
+import NotificationsDropdown from './NotificationsDropdown';
+
 let navbarTemplate = `
 <div id="navbar" class="navbar">
     <div class="navbar__container">
@@ -23,37 +26,15 @@ let navbarTemplate = `
             </autocomplete>          
         </div>    
         <template v-if="isAuthenticated">
-            <div class="navbar__notifications pe-icon-notifications">
-                <label class="" for="notifications-toggle"></label>
-                <input type="checkbox" class="notifications-toggle" id="notifications-toggle"/>
-                <div class="navbar__notifications-dropdown">
-                    <a href="#">Notifications</a>
-                    <ul class="navbar__notifications-list">                    
-                        <li><a href="#">Notif</a></li>
-                        <li><a href="#">Notif</a></li>
-                        <li><a href="#">Notif</a></li>
-                        <li><a href="#">Notif</a></li>
-                        <li><a href="#">Notif</a></li>
-                        <li><a href="#">Notif</a></li>                                  
-                    </ul>
-                    <a href="#">See All</a>
-                </div>            
-            </div>
+            <notifications
+                class="navbar__notifications"
+            >
+            </notifications>
             <nav class="navbar__menu" role="navigation">
-                <div class="navbar__username pe-icon-dropdown-arrow">
-                    <label class="" for="usermenu-toggle">
-                        Really Long Username
-                    </label>
-                    <input type="checkbox" class="usermenu-toggle" id="usermenu-toggle"/>
-                    <div class="navbar__user-dropdown">
-                        <a href="#">Home</a>
-                        <ul class="navbar__user-dropdown-list">
-                            <li><a href="#">Settings</a></li>
-                            <li><a href="#">Profile</a></li>                    
-                        </ul>
-                        <a href="#">Log Out</a>
-                    </div>                
-                </div>
+                <username
+                    class="navbar__username"
+                >
+                </username>
             </nav>
         </template>
         <template v-else>
@@ -64,10 +45,44 @@ let navbarTemplate = `
 </div>
 `;
 
+/*
+PLAN: 
+Navbar 
+    - Handles User Notifications  
+    - Handles Log Out and Log In Functions OR Events  
+    - Dynamically renders:
+        - List of notification components  
+        - Username when logged in 
+        - Sign in when logged out 
+
+NotificationsDropdown
+    - Dropdown that renders the number of 
+      notification items that it has 
+
+Notification 
+    - A single notification item 
+    - Dynamically renders 'new' status if user 
+      has not previously seen the notification.
+
+UsernameDropdown    
+    - Dropdown that handles Log Out functionality 
+    - Provides links to current user's: 
+        - settings page
+        - profile page 
+        - home page  
+
+*/
+
+
 import Autocomplete from '../Autocomplete/Autocomplete'; // Done
 
 export default {
+    name: 'Navbar',
+
     template: navbarTemplate,
+
+    componentName: 'Navbar',
+    
     props: {
        isAuthenticated: {
            type: Boolean,
@@ -80,7 +95,9 @@ export default {
         }
     },
     components: {
-        'autocomplete': Autocomplete
+        'autocomplete': Autocomplete,
+        'notifications': NotificationsDropdown,
+        'username': UsernameDropdown
     },
     methods: {
         querySearch(queryString, cb) {

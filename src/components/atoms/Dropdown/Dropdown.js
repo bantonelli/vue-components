@@ -82,7 +82,7 @@ export default {
       },
       arrowClass: {
           type: String,
-          default: 'popper__arrow'
+          default: 'dropdown__menu-arrow'
       },
       boundariesSelector: String,      
       popperOptions: {
