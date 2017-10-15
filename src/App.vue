@@ -142,9 +142,9 @@
     <form-demo></form-demo>-->
 
     
-    <mobile-nav>
+    <!--<mobile-nav>
       <navbar></navbar>
-    </mobile-nav>
+    </mobile-nav>-->
     <!--<div style="height: 60px; width: 100%; background-color: #9d9d9d;"></div>-->
 
     <!--<div style="width: 300px;">
@@ -180,6 +180,9 @@
         </template>       
       </dropdown>
     </div>-->
+
+    <notification></notification>
+
   </div>
 </template>
 
@@ -188,6 +191,7 @@ import Radio from './components/atoms/Radio/Radio'; // Done
 import Checkbox from './components/atoms/Checkbox/Checkbox'; // Done
 import Input from './components/atoms/Input'; // Done
 import Tag from './components/atoms/Tag/Tag'; 
+import Notification from './components/atoms/Notification/Notification';
 import Dropdown from './components/atoms/Dropdown/Dropdown'; // Done
 import DropdownMenuItem from './components/atoms/Dropdown/DropdownMenuItem'; // Done
 import RadioGroup from './components/molecules/RadioGroup/RadioGroup'; // Done
@@ -304,7 +308,8 @@ export default {
     'mobile-nav': MobileNav,
     'navbar': Navbar,
     'dropdown': Dropdown,
-    'dropdown-menu-item': DropdownMenuItem
+    'dropdown-menu-item': DropdownMenuItem,
+    'notification': Notification
   },
   methods: {
     handleSizeChange: function (value) {
