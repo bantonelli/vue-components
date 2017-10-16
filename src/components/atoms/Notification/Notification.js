@@ -34,29 +34,47 @@ export default {
         hasCategoryIcon: {
             type: Boolean,
             default: true
+        },
+        categoryMap: {
+            type: Object,
+            default: function () {
+                return {
+                    Announcement: "pe-icon-bell",
+                    Course: "pe-icon-close",
+                    Product: "pe-icon-dropdown-arrow"
+                }
+            }
+        },        
+        notification: {
+            type: Object,
+            default: function () {
+                return {
+                    title: "Notification Title",
+                    date: new Date(2017, 9, 15, 6, 10),
+                    message: "This is the main message of the notification",
+                    avatar: "http://placeimg.com/100/100/people",
+                    thumbnail: "http://placeimg.com/640/360/tech",                                 
+                    categories: ["Announcement", "Course", "Product"],
+                    category: "Announcement"                
+                }
+            }
+        },
+        iconClasses: {
+            type: Array,
+            default: function () {
+                return ["pe-icon-bell", "pe-icon-close", "pe-icon-dropdown-arrow"];
+            }
         }
     },
     data: function () {
-        return {
-            notification: {
-                title: "Notification Title",
-                date: new Date(2017, 9, 15, 6, 10),
-                message: "This is the main message of the notification",
-                avatar: "http://placeimg.com/100/100/people",
-                thumbnail: "http://placeimg.com/640/360/tech",                                 
-                categories: ["Announcement", "Course", "Product"],
-                category: "Announcement"                
-            },
-            iconClasses: ["pe-icon-bell", "pe-icon-close", "pe-icon-dropdown-arrow"]
-        }
+        return {}
     },
     computed: {
         iconClass: function () {
             if (!this.hasCategoryIcon) {
                 return;
-            } 
-            let categoryMap = _.zipObject(this.notification.categories, this.iconClasses);
-            return categoryMap[this.notification.category];
+            }             
+            return this.categoryMap[this.notification.category];
         },
         relativeTime: function () {
             // Date(YEAR, MONTH, DATE, HOURS, MINUTES, SECONDS)
@@ -77,12 +95,4 @@ ICON
 "../../../../static/images/ProEdify-Logo_FINAL_WHITE.png"
 
 _.zipObject(['a', 'b'], [1, 2]);
-
-THINGS TO PASS FROM SERVER: 
-    - list of categories 
-
-THINGS TO PASS FROM FRONTEND: 
-    - list of icon classes 
-
-
 */

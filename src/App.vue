@@ -142,9 +142,9 @@
     <form-demo></form-demo>-->
 
     
-    <!--<mobile-nav>
+    <mobile-nav>
       <navbar></navbar>
-    </mobile-nav>-->
+    </mobile-nav>
     <!--<div style="height: 60px; width: 100%; background-color: #9d9d9d;"></div>-->
 
     <!--<div style="width: 300px;">
@@ -181,7 +181,7 @@
       </dropdown>
     </div>-->
 
-    <notification></notification>
+    <!--<notification></notification>-->
 
   </div>
 </template>
