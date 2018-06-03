@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <!--<div class="dark-background">
+    <div class="dark-background">
       <input-component
         :modifier-styles="['input_color-invert']"
       >
@@ -139,12 +139,12 @@
 
     </div>
     
-    <form-demo></form-demo>-->
+    <form-demo></form-demo>
 
-    
+<!--    
     <mobile-nav>
       <navbar></navbar>
-    </mobile-nav>
+    </mobile-nav>-->
     <!--<div style="height: 60px; width: 100%; background-color: #9d9d9d;"></div>-->
 
     <!--<div style="width: 300px;">
