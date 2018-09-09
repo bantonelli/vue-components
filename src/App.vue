@@ -2,7 +2,7 @@
   <div id="app">
     <div class="dark-background">
       <input-component
-        :modifier-styles="['input_color-invert']"
+        :modifier-styles="['']"
       >
       </input-component>
       <input-field
@@ -24,7 +24,7 @@
 
     </div>    
 
-    <div style="width: 100%; margin: 0 auto;">
+    <div style="width: 100%; height: 200px; margin: 0 auto;">
       <pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
