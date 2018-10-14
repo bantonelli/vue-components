@@ -9,7 +9,7 @@ let mobileNavTemplate = `
                 <a class="mobile-nav__menu-heading" href="">Really Long Username</a>
                 <ul class="mobile-nav__menu-list"> 
                     <li class="mobile-nav__menu-item" v-for="link in links" :key="link.text">
-                        <router-link :to="link" class="mobile-nav__menu-link">{{ link.name }}</a>
+                        <router-link :to="link" class="mobile-nav__menu-link">{{ link.name }}</router-link>
                     </li>                
                 </ul>
             </div>
