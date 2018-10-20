@@ -1,13 +1,50 @@
+import mixitup from 'mixitup';
+
 let collectionTemplate = `
-<div class="container">
-    <div class="mix category-a" data-order="1"></div>
-    <div class="mix category-b" data-order="2"></div>
-    <div class="mix category-b category-c" data-order="3"></div>
-    <div class="mix category-a category-d" data-order="4"></div>
+<div class="container" ref="mixitupContainer">
+  <item></item>
 </div>
 `;
 
+let mixItUpItem = {
+  data: function () {
+    return {
+      item: null
+    }
+  },
+  render(h) {
+    return (
+      this.renderMixitup(this.item)
+    );
+  },
+  methods: {
+    renderMixitup(item) {
+      this.item = item;
+      return `<div class="item" data-ref="item">Name: ${item.name}, Role: ${item.role}, Age: ${item.age}</div>`;
+    }
+  },
+  created() {
+      var self = this;
+      var container = this.$parent.$refs.mixitupContainer;
+      const mixer = mixitup(container, {
+          data: {
+              // Specify unique ID key on the dataSet (users)
+              uidKey: 'id'
+          },
 
+          // must also specify a render.target function
+          render: {
+              target: self.renderMixitup
+          },
+          selectors: {
+              target: '[data-ref="item"]'
+          }
+      });
+      // when the child is created
+      // use the ref on the parent as the container to instantiate the mixer
+      this.$parent.mixer = mixer;
+  }
+}
 
 export default {
   name: 'Collection',
@@ -17,30 +54,15 @@ export default {
   componentName: 'Collection',
 
   props: {
-    model: Object,
-    rules: Object,
-    labelPosition: String,
-    labelWidth: String,
-    labelSuffix: {
-      type: String,
-      default: ''
-    },
-    inline: Boolean,
-    showMessage: {
-      type: Boolean,
-      default: true
-    }
   },
   watch: {
-    rules() {
-      this.validate();
-    }
   },
   data() {
     // You may use any key as your unique ID (e.g. 'id', '_id', 'Id', etc)
     // You will specify using the data.uidKey configuration option
         // In this case we are using 'id'
     return {
+        mixer: null,
         people: [
             {
                 id: 142,
@@ -76,24 +98,24 @@ export default {
     };
   },
   created() {
-    /* 
-    OPTION 1 - RENDER MIXITUP INTO EMPTY CONTAINER  
-    - GIVE MIXITUP CONTROL OVER FULL LIFECYCLE - Rendering etc. 
-        // Instantiate mixitup 
+    /*
+    OPTION 1 - RENDER MIXITUP INTO EMPTY CONTAINER
+    - GIVE MIXITUP CONTROL OVER FULL LIFECYCLE - Rendering etc.
+        // Instantiate mixitup
         function render(item) {
             // This function receives a single object from the dataset...
             // It is invoked every time an item is added to the DOM...
-            // And it must return a string representation of a single HTML element 
-            // to be inserted into the DOM. 
+            // And it must return a string representation of a single HTML element
+            // to be inserted into the DOM.
             return `<div class="item" data-ref="item">Name: ${item.name}, Role: ${item.role}, Age: ${item.age}</div>`;
         };
-        // In the example above, our render function uses a crude ES6 template 
-        // literal to produce HTML output, but you could easily integrate 
-        // a templating engine such as Handlebars, or your framework's 
+        // In the example above, our render function uses a crude ES6 template
+        // literal to produce HTML output, but you could easily integrate
+        // a templating engine such as Handlebars, or your framework's
         // built-in rendering method here – as long as it returns a string.
 
         const container = document.querySelector('[data-ref="container"]');
-        // The container element passed to the mixitup() factory function 
+        // The container element passed to the mixitup() factory function
         // should not contain any targets at this point.
         // <div class="container" data-ref="container"></div>
 
@@ -110,29 +132,25 @@ export default {
             selectors: {
                 target: '[data-ref="item"]'
             }
-        }); 
+        });
 
-        
+
 
 
 
 
     */
 
-    /* 
+    /*
     OPTION 2: PRE-RENDERED TARGETS
-    - This approach can be used in single page apps where your application 
+    - This approach can be used in single page apps where your application
     renders the component and its items in the browser before MixItUp is instantiated.
 
     */
 
   },
-  methods: {
-    resetFields() {
-    },
-    validate(callback) {
-    },
-    validateField(prop, cb) {
-    }
+  methods: {},
+  components: {
+    item: mixItUpItem
   }
 };
