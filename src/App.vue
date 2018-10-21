@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <div class="dark-background">
+    <!-- <div class="dark-background">
       <input-component
         :modifier-styles="['']"
       >
@@ -22,9 +22,9 @@
         >
       </input-field>
 
-    </div>    
+    </div>     -->
 
-    <div style="width: 100%; height: 200px; margin: 0 auto;">
+    <!-- <div style="width: 100%; height: 200px; margin: 0 auto;">
       <pagination
         @size-change="handleSizeChange"
         @current-change="handleCurrentChange"
@@ -35,9 +35,9 @@
         :total="400"
         >
       </pagination>    
-    </div>    
+    </div>     -->
 
-    <div style="width: 80%; margin: 0 auto;">
+    <!-- <div style="width: 80%; margin: 0 auto;">
       <autocomplete
         v-model="state1"
         :fetch-suggestions="querySearch"
@@ -49,16 +49,16 @@
         <span slot="prepend">PREPEND</span>
         <span slot="append">APPEND</span>
       </autocomplete>  
-    </div>        
+    </div>         -->
 
-    <input-number 
+    <!-- <input-number 
       v-model="num1" 
       @change="handleChange" 
       :min="1" 
       :max="10">
-    </input-number>
+    </input-number> -->
 
-    <radio-group v-model="radio">
+    <!-- <radio-group v-model="radio">
         <radio
           label="1"
           id="'Radio1'"
@@ -81,25 +81,25 @@
         >
           Option C
         </radio>
-    </radio-group>
+    </radio-group> -->
 
-    <checkbox
+    <!-- <checkbox
       v-model="checked"
       id="Checkbox1"
     >
     Stuff
-    </checkbox>
+    </checkbox> -->
 
-    <checkbox-group v-model="checkList">
+    <!-- <checkbox-group v-model="checkList">
       <checkbox label="Option A" id="'CheckboxA'" :modifier-styles="['checkbox_size-large']"></checkbox>
       <checkbox label="Option B" id="'CheckboxB'"></checkbox>
       <checkbox label="Option C" id="'CheckboxC'"></checkbox>
       <checkbox label="disabled" id="'CheckboxD'" disabled></checkbox>
       <checkbox label="selected and disabled" id="'CheckboxE'" disabled></checkbox>
-    </checkbox-group>
+    </checkbox-group> -->
 
   
-    <div style="width: 200px; margin: 0 auto;">
+    <!-- <div style="width: 200px; margin: 0 auto;">
       <select-component 
         v-model="selectValue" 
         placeholder="Select"
@@ -137,14 +137,14 @@
         </option-group>
       </select-component>
 
-    </div>
+    </div> -->
     
-    <form-demo></form-demo>
+    <!-- <form-demo></form-demo> -->
 
-<!--    
+   
     <mobile-nav>
       <navbar></navbar>
-    </mobile-nav>-->
+    </mobile-nav>
     <!--<div style="height: 60px; width: 100%; background-color: #9d9d9d;"></div>-->
 
     <!--<div style="width: 300px;">
@@ -182,7 +182,7 @@
     </div>-->
 
     <!--<notification></notification>-->
-
+  <collection></collection>
   </div>
 </template>
 
@@ -205,6 +205,7 @@ import OptionGroup from './components/molecules/EnhancedSelect/OptionGroup'; // 
 import MobileNav from './components/molecules/MobileNav/MobileNav';
 import Navbar from './components/molecules/Navbar/Navbar';
 import Pagination from './components/organisms/Pagination/Pagination';
+import Collection from './components/organisms/Collection/Collection';
 import FormDemo from './components/FormDemo.vue';
 
 export default {
@@ -309,7 +310,8 @@ export default {
     'navbar': Navbar,
     'dropdown': Dropdown,
     'dropdown-menu-item': DropdownMenuItem,
-    'notification': Notification
+    'notification': Notification,
+    'collection': Collection
   },
   methods: {
     handleSizeChange: function (value) {
