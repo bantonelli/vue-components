@@ -1,5 +1,11 @@
 <template>
   <div id="app">
+    <div id="site-navigation" style="margin-bottom: 60px;">
+      <mobile-nav>
+        <navbar></navbar>
+      </mobile-nav>
+    </div>
+
     <!-- <div class="dark-background">
       <input-component
         :modifier-styles="['']"
@@ -141,10 +147,6 @@
     
     <!-- <form-demo></form-demo> -->
 
-   
-    <mobile-nav>
-      <navbar></navbar>
-    </mobile-nav>
     <!--<div style="height: 60px; width: 100%; background-color: #9d9d9d;"></div>-->
 
     <!--<div style="width: 300px;">
@@ -375,6 +377,3 @@ export default {
   }
 }
 </script>
-
-
-
