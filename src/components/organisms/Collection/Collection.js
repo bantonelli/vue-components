@@ -1,6 +1,8 @@
 import mixitup from 'mixitup';
 import _ from 'lodash';
 
+import CollectionItem from './CollectionItem';
+
 /*
 Parent: Collection
     - Should house container element for mixitup 
@@ -19,64 +21,15 @@ Child: CollectionItem
 
 let collectionTemplate = `
 <div class="collection" ref="container">
-    <template v-for="person in people">
-        <collection-item :item="person"></collection-item>
-    </template> 
-    <button @click="updatePeople">Update People</button>
+    <collection-item v-for="item in internalData" :item="item" :mixer="mixer"></collection-item>
+    <button @click="updateData">Update Data</button>
+    <button @click="toggleData">Toggle Data</button>
 </div>
 `;
 
-// <collection-item :item="people[0]"></collection-item>
-// <collection-item :item="people[1]"></collection-item>
-// <collection-item :item="people[2]"></collection-item>
-// <collection-item :item="people[3]"></collection-item>
-// <collection-item :item="people[4]"></collection-item>
-// <template v-for="person in people">
-// <collection-item :item="person"></collection-item>
-// </template> 
-
-
-let collectionItemTemplate = `
-<div class="collection__item" data-ref="item" ref="collectionItem">
-    {{item.name}}        
-</div>
-`;
-
-
-let collectionItem = {
-    componentName: 'CollectionItem',
-
-    template: collectionItemTemplate, 
-    data: function () {
-        return {}
-    },
-    props: {
-        item: null
-    },
-    methods: {
-        updatePeople() {
-            this.item.id = Math.floor(Math.random() * 300);
-            this.$emit('changedPeople');
-        }
-    }
-    // render(h) {
-    //     return (
-    //         <div class="collection__item" ref="collectionItem">
-    //             <slot></slot>
-    //         </div>
-    //     );
-    // }
-}
-
-let people2 = [
+let data2 = [
     {
-        id: 511,
-        name: 'Sohyun',
-        role: 'Developer',
-        age: 23
-    },
-    {
-        id: 142,
+        id: 300,
         name: 'Joe',
         role: 'Developer',
         age: 22
@@ -94,14 +47,20 @@ let people2 = [
         age: 29
     },
     {
-        id: 402,
+        id: 200,
         name: 'Steph',
         role: 'Developer',
         age: 33
+    },
+    {
+        id: 511,
+        name: 'Sohyun',
+        role: 'Developer',
+        age: 23
     }
 ];
 
-let people1 = [
+let data1 = [
     {
         id: 142,
         name: 'Joe',
@@ -148,8 +107,20 @@ export default {
         return {
             mixer: null,
             hasPeople1: true,
-            people: people1
+            ogData: true,
+            internalData: null
         };
+    },
+    props: {
+        dataset: {
+            type: Array,
+            default: function () {
+                return data1;
+            }
+        }
+    },
+    created() {
+        this.internalData = [].concat(this.dataset);
     },
     mounted() {
         var self = this;
@@ -161,13 +132,12 @@ export default {
                 // Specify unique ID key on the dataSet (users)
                 uidKey: 'id'
             },
-
             // must also specify a render.target function
             render: {
                 target: self.renderMixitup
             },
             load: {
-                dataset: self.people
+                dataset: self.internalData
             },
             selectors: {
                 target: '[data-ref="item"]'
@@ -181,34 +151,40 @@ export default {
         // });
     },
     updated () {
-        this.mixer.dataset(this.people);
+        this.mixer.dataset(this.internalData);
+    },
+    destroyed() {
+        this.mixer.destroy();
     },
     methods: {
         renderMixitup(item) {
             this.item = item;
-            console.log("COMPONENTS: ", collectionItem);
+            console.log("COMPONENTS: ", CollectionItem);
             // collectionItem.template = `<div data-ref="item">${item.name}</div>`;
-            return collectionItem.template;
+            return CollectionItem.template;
             // return `<div data-ref="item">${item.name}</div>`;
             // collectionItem.$refs.collectionItem.innerHTML = `<div data-ref="item">${item.name}</div>`;
             // return collectionItem.$refs.collectionItem.innerHTML;
         },
-        updatePeople() {
-            // if (!this.sortByAge) {
-            //     this.people = _.sortBy(this.people, [function(person) { return person.age; }]);
-            // } else {
-            //     this.people = _.sortBy(this.people, [function(person) { return person.id; }]);
-            // }
-            // this.sortByAge = !this.sortByAge;
-            if (this.hasPeople1) {
-                this.people = people2;
+        updateData() {
+            if (this.ogData) {
+                this.internalData = data2;
             } else {
-                this.people = people1;
+                this.internalData = this.dataset;
             }
-            this.hasPeople1 = !this.hasPeople1;
+            this.ogData = !this.ogData;
+            this.mixer.dataset(this.internalData);
+        },
+        toggleData () {
+            if (this.hasPeople1) {
+                this.mixer.hide();
+            } else {
+                this.mixer.show();
+            }
+            this.hasPeople1 = !this.hasPeople1;            
         }
     },
     components: {
-        'collection-item': collectionItem
+        'collection-item': CollectionItem
     }
 };
