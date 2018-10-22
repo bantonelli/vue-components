@@ -34,9 +34,6 @@ let collectionItem = {
         var itemIndex = _.findIndex(this.$parent.internalData, function(o) { return o.id == self.item.id; });
         this.$emit('updateCollectionItem', this.item.name);    
         this.mixer.dataset(this.$parent.internalData);
-    },
-    created() {
-        this.mixer.dataset(this.$parent.internalData);
     }
 }
 

@@ -24,6 +24,8 @@ let collectionTemplate = `
     <collection-item v-for="item in internalData" :item="item" :mixer="mixer"></collection-item>
     <button @click="updateData">Update Data</button>
     <button @click="toggleData">Toggle Data</button>
+    <button @click="reverse">Reverse</button>
+    <button @click="regularOrder">Regular Order</button>
 </div>
 `;
 
@@ -137,7 +139,7 @@ export default {
                 target: self.renderMixitup
             },
             load: {
-                dataset: self.internalData
+                dataset: self.dataset
             },
             selectors: {
                 target: '[data-ref="item"]'
@@ -169,19 +171,36 @@ export default {
         updateData() {
             if (this.ogData) {
                 this.internalData = data2;
+                this.mixer.dataset(this.internalData);
             } else {
-                this.internalData = this.dataset;
+                this.internalData = this.dataset.slice();
+                this.mixer.dataset(this.internalData);
             }
             this.ogData = !this.ogData;
-            this.mixer.dataset(this.internalData);
         },
         toggleData () {
             if (this.hasPeople1) {
-                this.mixer.hide();
+                this.mixer.dataset(this.internalData);
             } else {
-                this.mixer.show();
+                var newData = this.internalData.filter(item => {
+                    item.age < 100; 
+                });
+                this.mixer.dataset(newData);
             }
             this.hasPeople1 = !this.hasPeople1;            
+        },
+        reverse() {
+            var self = this;
+            // this.mixer.sort('random', function() {
+            //     console.log(self.mixer.isMixing()) // false
+            // });
+            var newDataset = this.internalData.slice().reverse();
+            this.mixer.dataset(newDataset).then(() => {
+            });
+        },
+        regularOrder() {
+            this.mixer.dataset(this.internalData).then(() => {
+            });
         }
     },
     components: {
