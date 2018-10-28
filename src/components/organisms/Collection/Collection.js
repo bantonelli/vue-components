@@ -33,44 +33,10 @@ let collectionTemplate = `
         :mixer="mixer" 
         :componentToUse="component">            
     </collection-item>
-    <button @click="toggleData">Toggle Data</button>
-    <button @click="reverse">Reverse</button>
-    <button @click="regularOrder">Regular Order</button>
 </div>
 `;
 
-let data2 = [
-    {
-        id: 300,
-        name: 'Joe',
-        role: 'Developer',
-        age: 22
-    },
-    {
-        id: 242,
-        name: 'Zack',
-        role: 'Project Manager',
-        age: 45
-    },
-    {
-        id: 243,
-        name: 'Kumar',
-        role: 'Designer',
-        age: 29
-    },
-    {
-        id: 200,
-        name: 'Steph',
-        role: 'Developer',
-        age: 33
-    },
-    {
-        id: 511,
-        name: 'Sohyun',
-        role: 'Developer',
-        age: 23
-    }
-];
+
 
 let data1 = [
     {
@@ -120,9 +86,9 @@ export default {
         // In this case we are using 'id'
         return {
             mixer: null,
-            hasPeople1: true,
             ogData: true,
-            internalData: null
+            internalData: null,
+            hideData: false
         };
     },
     props: {
@@ -135,7 +101,7 @@ export default {
         component: null
     },
     created() {
-        this.internalData = [].concat(this.dataset);
+        this.internalData = [].concat(this.dataset);        
     },
     mounted() {
         var self = this;
@@ -164,58 +130,47 @@ export default {
         // this.$on('changedPeople', function () {
         //     mixer.dataset(this.people);
         // });
+        this.$on('updateData', this.updateData);
+        this.$on('toggleData', this.toggleData);
+        this.$on('sortData', this.sortData);
+        this.$on('filterData', this.filterData);
     },
     updated () {
+        // console.log("UPDATED COLLECTION");
         this.mixer.dataset(this.internalData);
     },
     destroyed() {
+        // console.log("DESTROYED COLLECTION");
         this.mixer.destroy();
     },
     methods: {
         renderMixitup(item) {
             this.item = item;
-            console.log("COMPONENTS: ", CollectionItem);
-            // collectionItem.template = `<div data-ref="item">${item.name}</div>`;
             return CollectionItem.template;
-            // return `<div data-ref="item">${item.name}</div>`;
-            // collectionItem.$refs.collectionItem.innerHTML = `<div data-ref="item">${item.name}</div>`;
-            // return collectionItem.$refs.collectionItem.innerHTML;
         },
-        // updateData() {
-        //     if (this.ogData) {
-        //         this.internalData = data2;
-        //         this.mixer.dataset(this.internalData);
-        //     } else {
-        //         this.internalData = this.dataset.slice();
-        //         this.mixer.dataset(this.internalData);
-        //     }
-        //     this.ogData = !this.ogData;
-        // },
-        toggleData () {
+        updateData(newData) {
+            this.internalData = newData;
+            this.mixer.dataset(this.internalData);
+        },
+        toggleData() {
             this.broadcast(this.componentName, 'collectionUpdate', []);
-            if (this.hasPeople1) {
-                this.mixer.dataset(this.internalData);
+            if (!this.hideData) {
+                this.mixer.dataset([]);
             } else {
-                var newData = this.internalData.filter(item => {
-                    item.age < 100; 
-                });
-                this.mixer.dataset(newData);
+                this.mixer.dataset(this.internalData);
             }
-            this.hasPeople1 = !this.hasPeople1;  
+            this.hideData = !this.hideData;
         },
-        reverse() {
+        sortData(sortFunction) {            
             this.broadcast(this.componentName, 'collectionUpdate', []);
-            var self = this;
-            // this.mixer.sort('random', function() {
-            //     console.log(self.mixer.isMixing()) // false
-            // });
-            var newDataset = this.internalData.slice().reverse();
-            this.mixer.dataset(newDataset).then(() => {
+            var newDataset = sortFunction(this.internalData.slice());       
+            this.mixer.dataset(newDataset).then(() => {                
             });
         },
-        regularOrder() {
+        filterData(filterFunction) {
             this.broadcast(this.componentName, 'collectionUpdate', []);
-            this.mixer.dataset(this.internalData).then(() => {
+            var newDataset = filterFunction(this.internalData.slice());            
+            this.mixer.dataset(newDataset).then(() => {
             });
         }
     },

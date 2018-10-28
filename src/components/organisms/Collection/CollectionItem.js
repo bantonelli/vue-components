@@ -35,10 +35,12 @@ let collectionItem = {
     //     this.$children[0].$props.item = this.item;
     // },
     destroyed () {
+        // console.log("DESTROYED COLLECTION ITEM");
         this.$emit('deleteCollectionItem', this.item);    
         this.mixer.dataset(this.$parent.internalData);
     },
     updated() {
+        // console.log("UPDATED COLLECTION ITEM");
         var self = this;
         var itemIndex = _.findIndex(this.$parent.internalData, function(o) { return o.id == self.item.id; });
         this.$emit('updateCollectionItem', this.item);    
@@ -47,37 +49,3 @@ let collectionItem = {
 }
 
 export default collectionItem;
-
-/*
-let collectionItemTemplate = `
-<div class="collection__item" data-ref="item" ref="collectionItem">
-    {{item.name}}        
-</div>
-`;
-
-
-let collectionItem = {
-    componentName: 'CollectionItem',
-
-    template: collectionItemTemplate, 
-    data: function () {
-        return {}
-    },
-    props: {
-        item: null
-    },
-    methods: {
-        updatePeople() {
-            this.item.id = Math.floor(Math.random() * 300);
-            this.$emit('changedPeople');
-        }
-    }
-    // render(h) {
-    //     return (
-    //         <div class="collection__item" ref="collectionItem">
-    //             <slot></slot>
-    //         </div>
-    //     );
-    // }
-}
-*/

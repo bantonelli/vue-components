@@ -184,8 +184,16 @@
     </div>-->
 
     <!--<notification></notification>-->
-  <collection :dataset="videos" :component="component">
-  </collection>
+    <div>
+      <h2 class="typography-h2">Filters</h2>
+      <button @click="updateCollectionData" class="button">Update Data</button>
+      <button @click="toggle" class="button button_color-accent">Toggle Data</button>
+      <button @click="reverse" class="button button_color-primary">Reverse</button>
+      <button @click="regularOrder" class="button button_color-primary">Regular Order</button>
+    </div>
+    <div style="height: 1000px;">
+      <collection :dataset="videos" :component="component"></collection>
+    </div>    
   </div>
 </template>
 
@@ -212,8 +220,56 @@ import Pagination from './components/organisms/Pagination/Pagination';
 import Collection from './components/organisms/Collection/Collection';
 import FormDemo from './components/FormDemo.vue';
 
+import Emitter from './components/utils/mixins/emitter';
+
+
+var videos2 = [
+    {
+        id: 1,
+        width: 560,
+        height: 315,
+        title: "Anatomical Terms: Directional Terms (Anatomy)",
+        source: "https://www.youtube.com/embed/KqgTERrYbQ4",
+        yt_id: "KqgTERrYbQ4",
+        frameborder: 0,
+        allow: "autoplay; encrypted-media"
+    },
+    {
+        id: 2,
+        width: 560,
+        height: 315,
+        title: "The Nervous System: Diencephalon - Thalamus & Hypothalamus",
+        source: "https://www.youtube.com/embed/5bCCb7lj6QA",
+        yt_id: "5bCCb7lj6QA",
+        frameborder: 0,
+        allow: "autoplay; encrypted-media"
+    },
+    {
+        id: 3,
+        width: 560,
+        height: 315,
+        title: "Units of Measure: Scientific Measurements & SI System",
+        source: "https://www.youtube.com/embed/oAtDAoqdExw",
+        yt_id: "oAtDAoqdExw",
+        frameborder: 0,
+        allow: "autoplay; encrypted-media"
+    },
+    {
+        id: 4,
+        width: 560,
+        height: 315,
+        title: "The Nervous System: Peripheral Nervous System (PNS)",
+        source: "https://www.youtube.com/embed/jaWrMYChc5A",
+        yt_id: "jaWrMYChc5A",
+        frameborder: 0,
+        allow: "autoplay; encrypted-media"
+    }
+];
+
+
 export default {
   name: 'app',
+  mixins: [Emitter],
   data () {
     return {
       component: Video,
@@ -362,6 +418,24 @@ export default {
     'video-component': Video
   },
   methods: {
+    updateCollectionData () {
+      this.broadcast(Collection.componentName, 'updateData', [videos2]);
+    },
+    toggle() {
+      this.broadcast(Collection.componentName, 'toggleData', []);
+    },
+    reverse() {
+      var reverseFunction = function (dataArray) {
+          return dataArray.reverse();
+      }
+      this.broadcast(Collection.componentName, 'sortData', [reverseFunction]);
+    },
+    regularOrder() {
+      var reverseFunction = function (dataArray) {
+          return dataArray;
+      }
+      this.broadcast(Collection.componentName, 'sortData', [reverseFunction]);
+    },
     handleSizeChange: function (value) {
         this.pageSize = value;
     },
@@ -425,100 +499,104 @@ export default {
 </script>
 
 <style>
-  .video {
-    display: block;
+.collection {
+  height: 100%;
+}
+.video {
+  display: block;
+}
+.m_load_here {
+  position: relative;
+}
+.ytp-large-play-button-bg {
+  fill: #1f1f1f;
+  fill-opacity: 0.81;
+  transition: fill 0.1s cubic-bezier(0.4, 0, 1, 1) 0s,
+    fill-opacity 0.1s cubic-bezier(0.4, 0, 1, 1) 0s;
+}
+.m_overlay:hover .ytp-large-play-button-bg {
+  fill: #cc181e;
+  fill-opacity: 1;
+  transition: fill 0.1s cubic-bezier(0, 0, 0.2, 1) 0s,
+    fill-opacity 0.1s cubic-bezier(0, 0, 0.2, 1) 0s;
+}
+.m_yt_button {
+  background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
+  border-radius: 10px;
+  height: 30px;
+  left: 50%;
+  position: absolute;
+  top: 50%;
+  transform: translate(-50%, -50%);
+  width: 42px;
+  z-index: 5;
+  display: block;
+}
+.m_overlay {
+  left: 0;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  position: absolute;
+}
+.m_yt_title {
+  color: #fff;
+  outline: 0 none;
+  text-decoration: none;
+  transition: color 0.1s cubic-bezier(0, 0, 0.2, 1) 0s;
+  /* float: left; */
+  max-width: 100%;
+  overflow: hidden;
+  overflow-wrap: normal;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  font-size: 18px;
+  padding: 14px 16px 0;
+}
+.ytImgContainer img {
+  max-width: 100%;
+  height: auto;
+}
 
-  }
-  .m_load_here {
-    position: relative;
-  }
-  .ytp-large-play-button-bg {
-      fill: #1f1f1f;
-      fill-opacity: 0.81;
-      transition: fill 0.1s cubic-bezier(0.4, 0, 1, 1) 0s, fill-opacity 0.1s cubic-bezier(0.4, 0, 1, 1) 0s;
-   }
-   .m_overlay:hover .ytp-large-play-button-bg {
-      fill: #cc181e;
-      fill-opacity: 1;
-      transition: fill 0.1s cubic-bezier(0, 0, 0.2, 1) 0s, fill-opacity 0.1s cubic-bezier(0, 0, 0.2, 1) 0s;
-   }
-   .m_yt_button {
-      background: rgba(0, 0, 0, 0) none repeat scroll 0 0;
-      border-radius: 10px;
-      height: 30px;
-      left: 50%;
-      position: absolute;
-      top: 50%;
-      transform: translate(-50%, -50%);
-      width: 42px;
-      z-index: 5;
-      display: block;
-   }
-   .m_overlay {
-      left: 0;
-      top:0;
-      right: 0;
-      bottom :0;
-      position: absolute;
-   }
-   .m_yt_title {
-      color: #FFF;
-      outline: 0 none;
-      text-decoration: none;
-      transition: color 0.1s cubic-bezier(0, 0, 0.2, 1) 0s;
-      /* float: left; */
-      max-width: 100%;
-      overflow: hidden;
-      overflow-wrap: normal;
-      text-overflow: ellipsis;
-      white-space: nowrap;
-      font-size: 18px;
-      padding: 14px 16px 0;
-   }
-  .ytImgContainer img {
-    max-width: 100%;
-    height: auto;
-  }
+.ytImgContainer {
+  margin: 0 auto;
+  max-width: 604px;
+  width: 100%;
+}
 
-  .ytImgContainer {
-      margin: 0 auto;
-      max-width: 604px;
-      width: 100%;
-  }
+.ytImgContainer:after {
+  clear: both;
+}
 
-  .ytImgContainer:after {
-      clear: both;
-  }
+.ytImgContainer:before,
+.ytImgContainer:after {
+  content: "";
+  display: table;
+}
 
-  .ytImgContainer:before,
-  .ytImgContainer:after {
-      content: "";
-      display: table;
-  }
+div.ytImgThumbBox {
+  position: relative !important;
+  width: 100% !important;
+  height: 100% !important;
+  overflow: hidden;
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+}
 
-  div.ytImgThumbBox{
-      position: relative !important;
-      width: 100% !important;
-      height: 100% !important;
-      overflow: hidden;
-      background-size: cover;
-      background-position: center;
-      background-repeat: no-repeat;
-  }
+div.ytImgThumbPlay {
+  position: absolute !important;
+  top: 50% !important;
+  left: 50% !important;
+  width: 48px !important;
+  height: 48px !important;
+  margin: -24px 0 0 -24px !important;
+}
 
-  div.ytImgThumbPlay{
-      position: absolute !important;
-      top: 50% !important;
-      left: 50% !important;
-      width:48px !important;
-      height:48px !important;
-      margin: -24px 0 0 -24px !important;
-  }
-
-  img.ytImgThumbImg{
-      width: 100% !important;
-      height: 100% !important;
-      margin: -9.5% 0px -19%;
-      opacity: 0;
-  }
+img.ytImgThumbImg {
+  width: 100% !important;
+  height: 100% !important;
+  margin: -9.5% 0px -19%;
+  opacity: 0;
+}
 </style>
