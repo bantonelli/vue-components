@@ -1,6 +1,7 @@
 import mixitup from 'mixitup';
 import _ from 'lodash';
 
+import Emitter from '../../utils/mixins/emitter';
 import CollectionItem from './CollectionItem';
 
 /*
@@ -111,6 +112,8 @@ export default {
 
     componentName: 'Collection',
 
+    mixins: [Emitter],
+
     data() {
         // You may use any key as your unique ID (e.g. 'id', '_id', 'Id', etc)
         // You will specify using the data.uidKey configuration option
@@ -189,6 +192,7 @@ export default {
         //     this.ogData = !this.ogData;
         // },
         toggleData () {
+            this.broadcast(this.componentName, 'collectionUpdate', []);
             if (this.hasPeople1) {
                 this.mixer.dataset(this.internalData);
             } else {
@@ -197,9 +201,10 @@ export default {
                 });
                 this.mixer.dataset(newData);
             }
-            this.hasPeople1 = !this.hasPeople1;            
+            this.hasPeople1 = !this.hasPeople1;  
         },
         reverse() {
+            this.broadcast(this.componentName, 'collectionUpdate', []);
             var self = this;
             // this.mixer.sort('random', function() {
             //     console.log(self.mixer.isMixing()) // false
@@ -209,8 +214,16 @@ export default {
             });
         },
         regularOrder() {
+            this.broadcast(this.componentName, 'collectionUpdate', []);
             this.mixer.dataset(this.internalData).then(() => {
             });
+        }
+    },
+    computed: {
+        componentName () {
+            if (this.component) {
+                return this.component.componentName;
+            }
         }
     },
     components: {

@@ -501,7 +501,6 @@ export default {
       width: 100% !important;
       height: 100% !important;
       overflow: hidden;
-      /* background-image: url(https://img.youtube.com/vi/oAtDAoqdExw/hqdefault.jpg); */
       background-size: cover;
       background-position: center;
       background-repeat: no-repeat;

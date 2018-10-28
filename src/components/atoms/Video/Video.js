@@ -1,3 +1,5 @@
+import Emitter from '../../utils/mixins/emitter';
+
 let videoTemplate = `
 <div class="video">
     <template v-if="isYTEmbed">
@@ -59,6 +61,8 @@ let video = {
 
     template: videoTemplate, 
 
+    mixins: [Emitter],
+
     data: function () {
         return {
             iFrame: false,
@@ -85,6 +89,10 @@ let video = {
     methods: {
         loadIframe() {
             this.iFrame = !this.iFrame;
+            this.$on('collectionUpdate', this.resetToImage);
+        },
+        resetToImage() {
+            this.iFrame = false;
         }
     },
     computed: {
@@ -105,3 +113,19 @@ let video = {
 }
 
 export default video;
+
+/*
+- Integrate emitter mixin - DONE 
+        - Use an event to signal that the collection is about to sort
+        - This event will trigger the child component (Video) switch back to the thumbnail
+                - Will help with the animations.
+- Set up callback system for filter and sort methods of Collection
+        - Parent should be able to pass a function definition to be the filter/sorting
+            algorithm that is used.
+- Set up styles for Video component in Patternlab
+
+- Consider adding lifecycle logic similar to FormItem 
+  beforeDestroy() {
+    this.dispatch('Form', 'form.removeField', [this]);
+  }
+*/

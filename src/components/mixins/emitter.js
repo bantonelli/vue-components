@@ -12,6 +12,7 @@ function broadcast(componentName, eventName, params) {
 export default {
   methods: {
     dispatch(componentName, eventName, params) {
+      // Send event to parent
       var parent = this.$parent || this.$root;
       var name = parent.$options.componentName;
 
@@ -27,6 +28,7 @@ export default {
       }
     },
     broadcast(componentName, eventName, params) {
+      // Send event to child 
       broadcast.call(this, componentName, eventName, params);
     }
   }
