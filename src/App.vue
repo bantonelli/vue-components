@@ -186,10 +186,10 @@
     <!--<notification></notification>-->
     <div>
       <h2 class="typography-h2">Filters</h2>
-      <button @click="updateCollectionData" class="button">Update Data</button>
-      <button @click="toggle" class="button button_color-accent">Toggle Data</button>
-      <button @click="reverse" class="button button_color-primary">Reverse</button>
-      <button @click="regularOrder" class="button button_color-primary">Regular Order</button>
+      <button @click="updateCollectionData" class="button"><span class="button__text">Data</span></button>
+      <button @click="toggle" class="button button_color-accent"><span class="button__text">Toggle Data</span></button>
+      <button @click="reverse" class="button button_color-primary"><span class="button__text">Reverse</span></button>
+      <button @click="regularOrder" class="button button_color-primary"><span class="button__text">Regular Order</span></button>
     </div>
     <div style="height: 1000px;">
       <collection :dataset="videos" :component="component"></collection>
