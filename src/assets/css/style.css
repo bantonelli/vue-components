@@ -5177,6 +5177,13 @@ body {
     color: red;
     padding: 10px 10px; }
 
+.collection {
+  display: block;
+  width: 100%;
+  height: 100%;
+  text-align: center;
+  text-decoration: none; }
+
 .collection__item {
   -webkit-box-sizing: border-box;
   box-sizing: border-box;

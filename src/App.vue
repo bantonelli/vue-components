@@ -499,9 +499,6 @@ export default {
 </script>
 
 <style>
-.collection {
-  height: 100%;
-}
 .video {
   display: block;
 }
