@@ -17,12 +17,21 @@ Child: CollectionItem
     - Should have a slot to pass in a child component
     - Should take in a prop for the mixitup item
         - This is the item passed in the render function. 
+
+
+- Strategy 
+    - pass a component property to the collection item 
+    - this component property will be the component to load in 
 */
 
 let collectionTemplate = `
 <div class="collection" ref="container">
-    <collection-item v-for="item in internalData" :item="item" :mixer="mixer"></collection-item>
-    <button @click="updateData">Update Data</button>
+    <collection-item 
+        v-for="item in internalData" 
+        :item="item" 
+        :mixer="mixer" 
+        :componentToUse="component">            
+    </collection-item>
     <button @click="toggleData">Toggle Data</button>
     <button @click="reverse">Reverse</button>
     <button @click="regularOrder">Regular Order</button>
@@ -119,7 +128,8 @@ export default {
             default: function () {
                 return data1;
             }
-        }
+        },
+        component: null
     },
     created() {
         this.internalData = [].concat(this.dataset);
@@ -168,16 +178,16 @@ export default {
             // collectionItem.$refs.collectionItem.innerHTML = `<div data-ref="item">${item.name}</div>`;
             // return collectionItem.$refs.collectionItem.innerHTML;
         },
-        updateData() {
-            if (this.ogData) {
-                this.internalData = data2;
-                this.mixer.dataset(this.internalData);
-            } else {
-                this.internalData = this.dataset.slice();
-                this.mixer.dataset(this.internalData);
-            }
-            this.ogData = !this.ogData;
-        },
+        // updateData() {
+        //     if (this.ogData) {
+        //         this.internalData = data2;
+        //         this.mixer.dataset(this.internalData);
+        //     } else {
+        //         this.internalData = this.dataset.slice();
+        //         this.mixer.dataset(this.internalData);
+        //     }
+        //     this.ogData = !this.ogData;
+        // },
         toggleData () {
             if (this.hasPeople1) {
                 this.mixer.dataset(this.internalData);

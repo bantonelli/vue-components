@@ -8,7 +8,11 @@ import _ from 'lodash';
 
 let collectionItemTemplate = `
 <div class="collection__item" ref="collectionItem" data-ref="item">
-    {{item.name}}    
+    <component
+        v-bind:is="componentToUse"
+        :item="item"
+    >
+    </component>
 </div>
 `;
 
@@ -23,16 +27,21 @@ let collectionItem = {
     props: {
         item: null,
         index: null,
-        mixer: null
+        mixer: null,
+        componentToUse: null
     },
+    // mounted () {
+    //     // console.log("CHILD: ", this.$children[0].item);
+    //     this.$children[0].$props.item = this.item;
+    // },
     destroyed () {
-        this.$emit('deleteCollectionItem', this.item.name);    
+        this.$emit('deleteCollectionItem', this.item);    
         this.mixer.dataset(this.$parent.internalData);
     },
     updated() {
         var self = this;
         var itemIndex = _.findIndex(this.$parent.internalData, function(o) { return o.id == self.item.id; });
-        this.$emit('updateCollectionItem', this.item.name);    
+        this.$emit('updateCollectionItem', this.item);    
         this.mixer.dataset(this.$parent.internalData);
     }
 }
