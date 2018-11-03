@@ -14,6 +14,10 @@ export default {
       default: 10
     },
 
+    jumperControls: {
+      type: Boolean,
+      default: true
+    },
     // small: Boolean,
 
     total: Number,
@@ -45,14 +49,14 @@ export default {
   },
 
   render(h) {
-    // make master template 
+    // make master template
     let template = <div class='pagination'></div>;
 
-    // layout is either taken as a prop or is an empty string if not passed in 
+    // layout is either taken as a prop or is an empty string if not passed in
     const layout = this.layout || '';
     if (!layout) return;
 
-    // Create map of layout keys to respective markup 
+    // Create map of layout keys to respective markup
     const TEMPLATE_MAP = {
       prev: <prev></prev>,
       jumper: <jumper></jumper>,
@@ -63,22 +67,23 @@ export default {
       total: <total></total>
     };
 
-    // components = array of strings that correlate to keys in TEMPLATE_MAP 
+    // components = array of strings that correlate to keys in TEMPLATE_MAP
     const components = layout.split(',').map((item) => item.trim());
-    const wrapper = <div class="pagination__wrapper"></div>;
+    let wrapper = <div class="pagination__wrapper"></div>;
     let haveWrapper = false;
 
     // if (this.small) {
     //   template.data.class += ' el-pagination--small';
     // }
 
-    // Loop through components array 
+    // Loop through components array
+    template.children = [];
+    wrapper.children = [];
     components.forEach(compo => {
       if (compo === '->') {
         haveWrapper = true;
         return;
       }
-
       if (!haveWrapper) {
         template.children.push(TEMPLATE_MAP[compo]);
       } else {
@@ -164,7 +169,7 @@ export default {
             <select-component
               placeholder= { this.$parent.internalPageSize }
               on-input={ this.handleChange }
-              options={ this.pageSizes }              
+              options={ this.pageSizes }
             >
             </select-component>
           </div>
@@ -185,7 +190,7 @@ export default {
       }
     },
 
-    // Done Refactoring 
+    // Done Refactoring
     Jumper: {
       // mixins: [Locale],
 
@@ -251,6 +256,7 @@ export default {
                 value={ this.$parent.internalCurrentPage }
                 on-change={ this.handleChange }
                 on-focus={ this.handleFocus }
+                controls={ this.$parent.jumperControls }
               >
               </input-number>
             </div>
@@ -258,7 +264,7 @@ export default {
       }
     },
 
-    // Done Refactoring 
+    // Done Refactoring
     Total: {
       // mixins: [Locale],
 
@@ -281,7 +287,7 @@ export default {
 
   methods: {
     handleCurrentChange(val) {
-      // Method to handle the @change sent by pager 
+      // Method to handle the @change sent by pager
       this.internalCurrentPage = this.getValidCurrentPage(val);
     },
 
@@ -296,12 +302,12 @@ export default {
     },
 
     getValidCurrentPage(value) {
-      // Method to validate page number 
+      // Method to validate page number
 
-      // Value is value of newPage 
+      // Value is value of newPage
       value = parseInt(value, 10);
 
-      // havePageCount = true if internalPageCount is a number 
+      // havePageCount = true if internalPageCount is a number
       const havePageCount = typeof this.internalPageCount === 'number';
 
       let resetValue;
@@ -309,7 +315,7 @@ export default {
         if (isNaN(value) || value < 1) resetValue = 1;
       } else {
 
-        // if we have page count 
+        // if we have page count
         if (value < 1) {
           // reset value to 1 if desired page is less than 1
           resetValue = 1;
@@ -319,14 +325,14 @@ export default {
         }
       }
 
-      // handle edge cases 
+      // handle edge cases
       if (resetValue === undefined && isNaN(value)) {
         resetValue = 1;
       } else if (resetValue === 0) {
         resetValue = 1;
       }
 
-      // return either the newPage value or the resetValue if newPage has errors 
+      // return either the newPage value or the resetValue if newPage has errors
       return resetValue === undefined ? value : resetValue;
     }
   },

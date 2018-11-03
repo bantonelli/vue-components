@@ -47,7 +47,7 @@
 
 
 <script>
-import Radio from './atoms/Radio/Radio'; 
+import Radio from './atoms/Radio/Radio';
 import Checkbox from './atoms/Checkbox/Checkbox';
 import RadioGroup from './molecules/RadioGroup/RadioGroup';
 import CheckboxGroup from './molecules/CheckboxGroup/CheckboxGroup';
@@ -110,14 +110,14 @@ import FormItem from './organisms/Form/FormItem'; // Done
     .checkbox-group {
         .checkbox {
             display: inline-block;
-            width: 45%;                   
+            width: 45%;
         }
     }
-    .radio-group {        
+    .radio-group {
         .radio {
             margin: 10px 0 0 0;
             display: inline-block;
-            width: 45%;                   
+            width: 45%;
         }
     }
     .select {
@@ -136,7 +136,7 @@ import FormItem from './organisms/Form/FormItem'; // Done
         }
     }
 
-    .form {    
+    .form {
         &_label-left {
             .form-item {
                 padding: 20px 10px;
@@ -154,15 +154,15 @@ import FormItem from './organisms/Form/FormItem'; // Done
             }
             .form-item__label {
                 left: 0;
-                text-align: right;                
+                text-align: right;
             }
-        }  
+        }
         &_label-top {
             .form-item {
                 padding: 20px 10px;
                 margin: 30px 0;
                 border-top: 1px solid transparentize(#b6b6b6, 0.5); // nth($pe-greyscale-color-list, 4);
-                border-radius: 0px; 
+                border-radius: 0px;
             }
             .form-item__label {
                 top: -25px;

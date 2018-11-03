@@ -40,7 +40,7 @@
         layout="->, prev, sizes, pager, jumper, next"
         :total="400"
         >
-      </pagination>    
+      </pagination>
     </div>     -->
 
     <!-- <div style="width: 80%; margin: 0 auto;">
@@ -54,13 +54,13 @@
       >
         <span slot="prepend">PREPEND</span>
         <span slot="append">APPEND</span>
-      </autocomplete>  
+      </autocomplete>
     </div>         -->
 
-    <!-- <input-number 
-      v-model="num1" 
-      @change="handleChange" 
-      :min="1" 
+    <!-- <input-number
+      v-model="num1"
+      @change="handleChange"
+      :min="1"
       :max="10">
     </input-number> -->
 
@@ -74,14 +74,14 @@
           Option A
         </radio>
 
-        <radio      
+        <radio
           label="2"
           id="'Radio2'"
         >
           Option B
         </radio>
 
-        <radio      
+        <radio
           label="3"
           id="'Radio3'"
         >
@@ -104,12 +104,12 @@
       <checkbox label="selected and disabled" id="'CheckboxE'" disabled></checkbox>
     </checkbox-group> -->
 
-  
+
     <!-- <div style="width: 200px; margin: 0 auto;">
-      <select-component 
-        v-model="selectValue" 
+      <select-component
+        v-model="selectValue"
         placeholder="Select"
-        multiple 
+        multiple
         filterable
         allow-create
         :loading="loading"
@@ -144,7 +144,7 @@
       </select-component>
 
     </div> -->
-    
+
     <!-- <form-demo></form-demo> -->
 
     <!--<div style="height: 60px; width: 100%; background-color: #9d9d9d;"></div>-->
@@ -159,7 +159,7 @@
         :show-header="true"
         :show-footer="true"
         :popper-options="{
-            placement: 'auto', 
+            placement: 'auto',
             offsets: {
               arrow: {
                 top: 0,
@@ -167,10 +167,10 @@
               }
             }
           }"
-      > 
+      >
         <template slot="header">
             <a href="#">Home</a>
-        </template>       
+        </template>
         <dropdown-menu-item>
           <a href="#">Settings</a>
         </dropdown-menu-item>
@@ -179,12 +179,12 @@
         </dropdown-menu-item>
         <template slot="footer">
             <a href="#">Log Out</a>
-        </template>       
+        </template>
       </dropdown>
     </div>-->
 
     <!--<notification></notification>-->
-    <div>
+    <!-- <div>
       <h2 class="typography-h2">Filters</h2>
       <button @click="updateCollectionData" class="button"><span class="button__text">Data</span></button>
       <button @click="toggle" class="button button_color-accent"><span class="button__text">Toggle Data</span></button>
@@ -193,7 +193,8 @@
     </div>
     <div style="height: 1000px;">
       <collection :dataset="videos" :component="component"></collection>
-    </div>    
+    </div> -->
+    <questionnaire></questionnaire>
   </div>
 </template>
 
@@ -201,7 +202,7 @@
 import Radio from './components/atoms/Radio/Radio'; // Done
 import Checkbox from './components/atoms/Checkbox/Checkbox'; // Done
 import Input from './components/atoms/Input'; // Done
-import Tag from './components/atoms/Tag/Tag'; 
+import Tag from './components/atoms/Tag/Tag';
 import Notification from './components/atoms/Notification/Notification';
 import Dropdown from './components/atoms/Dropdown/Dropdown'; // Done
 import DropdownMenuItem from './components/atoms/Dropdown/DropdownMenuItem'; // Done
@@ -217,6 +218,7 @@ import OptionGroup from './components/molecules/EnhancedSelect/OptionGroup'; // 
 import MobileNav from './components/molecules/MobileNav/MobileNav';
 import Navbar from './components/molecules/Navbar/Navbar';
 import Pagination from './components/organisms/Pagination/Pagination';
+import Questionnaire from './components/organisms/Questionnaire/Questionnaire';
 import Collection from './components/organisms/Collection/Collection';
 import FormDemo from './components/FormDemo.vue';
 
@@ -415,7 +417,8 @@ export default {
     'dropdown-menu-item': DropdownMenuItem,
     'notification': Notification,
     'collection': Collection,
-    'video-component': Video
+    'video-component': Video,
+    'questionnaire': Questionnaire
   },
   methods: {
     updateCollectionData () {
