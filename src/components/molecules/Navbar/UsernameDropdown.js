@@ -10,15 +10,28 @@ let usernameDropdownTemplate = `
   :show-footer="true"
   :popper-options="{placement: 'bottom'}"
 > 
-  <template slot="header">
-      <a :href="headerLink">Home</a>
-  </template>       
-  <dropdown-menu-item v-for="item in menuItems">
-    <a :href="item.link">{{item.item}}</a>
-  </dropdown-menu-item>
-  <template slot="footer">
-      <a :href="footerLink" @click="logOut">Log Out</a>
-  </template>       
+    <template v-if="!hasRouter">
+        <template slot="header">
+            <a :href="headerLink.url">{{headerLink.text}}</a>
+        </template>       
+        <dropdown-menu-item v-for="link in links">
+            <a :href="link.url">{{link.text}}</a>
+        </dropdown-menu-item>
+        <template slot="footer">
+            <a :href="footerLink.url" @click="logOut">{{footerLink.text}}</a>
+        </template>       
+    </template>
+    <template v-else>
+        <template slot="header">
+            <router-link :to="headerLink">{{headerLink.name}}</router-link>
+        </template>       
+        <dropdown-menu-item v-for="link in links">
+            <router-link :to="link">{{link.name}}</router-link>
+        </dropdown-menu-item>
+        <template slot="footer">
+            <router-link :to="footerLink" @click="logOut">{{footerLink.name}}</router-link>
+        </template>  
+    </template>
 </dropdown>
 `;
 
@@ -34,20 +47,24 @@ export default {
             type: String,
             default: 'Username'
         },
-        headerLink: {
-            type: String,
-            default: '#'
+        headerLink: {            
+            type: Object,
+            default: function () {
+                return {text: 'Home', url: '#'}
+            }
         },
         footerLink: {
-            type: String,
-            default: '#'
+            type: Object,
+            default: function () {
+                return {text: 'Log Out', url: '#'}
+            }
         },
-        menuItems: {
+        links: {
             type: Array,
             default: function () {
                 return [
-                    {item: 'Settings', link: '#'},
-                    {item: 'Profile', link: '#'},
+                    {text: 'Settings', url: '#'},
+                    {text: 'Profile', url: '#'},
                 ]
             }
         }
@@ -58,7 +75,14 @@ export default {
             state1: ''
         }
     },
-
+    computed: {
+        hasRouter() {
+            if (this.$router) {
+                return true;
+            } 
+            return false;
+        }
+    },
     components: {
         'dropdown': Dropdown,
         'dropdown-menu-item': DropdownMenuItem

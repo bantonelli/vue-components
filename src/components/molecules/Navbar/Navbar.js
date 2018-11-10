@@ -1,5 +1,7 @@
 import UsernameDropdown from './UsernameDropdown';
 import NotificationsDropdown from './NotificationsDropdown';
+import Autocomplete from '../Autocomplete/Autocomplete'; // Done
+import _ from 'lodash';
 
 let navbarTemplate = `
 <div id="navbar" class="navbar">
@@ -33,13 +35,33 @@ let navbarTemplate = `
             <nav class="navbar__menu" role="navigation">
                 <username
                     class="navbar__username"
+                    :user-name="userName"
+                    :header-link="headerLink"
+                    :links="mainLinks"
+                    :footer-link="footerLink"
                 >
                 </username>
             </nav>
         </template>
+        <!-- Not authenticated no username shown --> 
         <template v-else>
-            <a class="navbar__auth-link" href="#">Sign Up</a>
-            <a class="navbar__auth-link" href="#">Log In</a>
+            <nav class="navbar__menu-auth" role="navigation">
+                <template v-if="hasRouter">
+                    <router-link 
+                        v-for="link in authLinks"
+                        :key="link.name"
+                        :to="link" 
+                        class="navbar__auth-link"
+                    >
+                        {{ link.name }}
+                    </router-link>
+                </template>
+                <template v-else>
+                    <a v-for="link in authLinks" :key="link.text" class="navbar__auth-link" href="link.url">
+                        {{link.text}}
+                    </a>
+                </template>
+            </nav>            
         </template>
     </div>
 </div>
@@ -73,9 +95,6 @@ UsernameDropdown
 
 */
 
-
-import Autocomplete from '../Autocomplete/Autocomplete'; // Done
-
 export default {
     name: 'Navbar',
 
@@ -84,14 +103,57 @@ export default {
     componentName: 'Navbar',
     
     props: {
-       isAuthenticated: {
-           type: Boolean,
-           default: true
-       }
+        userName: {
+            type: String,
+            default: "Brandon"
+        },
+        isAuthenticated: {
+            type: Boolean,
+            default: false
+        },
+        links: {
+            type: Array,
+            default: function () {
+                return [
+                    {text: "Home", url: "#"},
+                    {text: "Video Library", url: "#"},
+                    {text: "Account Settings", url: "#"},
+                    {text: "Profile", url: "#"},
+                    {text: "Log Out", url: "#"}
+                ];
+            }
+        },
+        authLinks: {
+            type: Array,
+            default: function () {
+                return [
+                    {text: "Sign Up", url: "#"},
+                    {text: "Log In", url: "#"}
+                ];
+            } 
+        }
     },
     data: function () {
         return {
             state1: ''
+        }
+    },
+    computed: {
+        headerLink () {
+            return this.links[0];
+        },
+        mainLinks () {
+            var result = _.drop(this.links, 1);
+            return _.dropRight(result, 1);
+        },
+        footerLink () {
+            return this.links[this.links.length - 1];
+        },
+        hasRouter() {
+            if (this.$router) {
+                return true;
+            } 
+            return false;
         }
     },
     components: {
@@ -101,7 +163,7 @@ export default {
     },
     methods: {
         querySearch(queryString, cb) {
-            var links = this.links;
+            var links = this.searchResults;
             // Call createFilter for every link   
             var results = queryString ? links.filter(this.createFilter(queryString)) : links;
             // call callback function to return suggestions
@@ -128,6 +190,6 @@ export default {
         }
     },
     mounted: function () {
-        this.links = this.loadAll();
+        this.searchResults = this.loadAll();
     }
 }
