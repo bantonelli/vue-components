@@ -4,13 +4,15 @@
 
 let questionnaireTemplate = `<div class="questionnaire">
   <template v-for="question in shownQuestions">
-    <question
-      :question="question"
-      :parentProps="parentProps"
-      :class="modifierStyles"
-      :key=question._id
-      >
-    </question>
+    <keep-alive>
+      <question
+        :question="question"
+        :parentProps="parentProps"
+        :class="modifierStyles"
+        :key=question._id
+        >
+      </question>
+    </keep-alive>
   </template>
   <pagination
     style="margin-top:10px;"

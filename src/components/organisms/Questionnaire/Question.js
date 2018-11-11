@@ -164,7 +164,10 @@ export default {
         'checkbox-component': Checkbox,
         'text-component': Text
     },
-    mixins: [Emitter]
+    mixins: [Emitter],
+    destroyed() {
+      console.log("DESTROYED")
+    }
 }
 
 /* let question know if it was answered correctly DONE
