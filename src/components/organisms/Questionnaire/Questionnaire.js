@@ -1,3 +1,7 @@
+/*
+  TODO
+*/
+
 let questionnaireTemplate = `<div class="questionnaire">
   <template v-for="question in shownQuestions">
     <question
@@ -9,6 +13,7 @@ let questionnaireTemplate = `<div class="questionnaire">
     </question>
   </template>
   <pagination
+    style="margin-top:10px;"
     @size-change="handleSizeChange"
     @current-change="handleCurrentChange"
     :current-page.sync="currentPage"
@@ -88,7 +93,8 @@ export default {
               { text: "choice c" },
               { text: "choice d" }
             ],
-            answer: "choice a",
+            answer: ["choice a", "choice b"],
+            answerType: "checkbox",
             explanation: {
               answer: "choice a",
               image: "ANSWER IMAGE",
@@ -106,6 +112,7 @@ export default {
               { text: "choice d" }
             ],
             answer: "choice a",
+            answerType: "radio",
             explanation: {
               answer: "choice a",
               image: "ANSWER IMAGE",
@@ -116,13 +123,22 @@ export default {
             _id: "3",
             question: "QUESTION 3?",
             image: "QUESTION IMAGE",
-            choices: [
-              { text: "choice a", timesChosen: 0 },
-              { text: "choice b", timesChosen: 0 },
-              { text: "choice c", timesChosen: 0 },
-              { text: "choice d", timesChosen: 0 }
-            ],
             answer: "choice a",
+            answerType: "text",
+            answerMaxLength: 10,
+            explanation: {
+              answer: "choice a",
+              image: "ANSWER IMAGE",
+              explanation: "EXPLANATION"
+            }
+          },
+          {
+            _id: "4",
+            question: "QUESTION 4?",
+            image: "QUESTION IMAGE",
+            answer: "choice a",
+            answerType: "textarea",
+            answerMaxLength: 20,
             explanation: {
               answer: "choice a",
               image: "ANSWER IMAGE",

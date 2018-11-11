@@ -1,29 +1,5 @@
 /*
-  let question know if it was answered correctly DONE
-  let parent know if correct or wrong DONE
-  PARENT PROPS: DONE
-    show answer
-    show explanations
-    show if right or wrong
-    show poll
-    submittable
-    is Poll
-  elements: DONE
-    choices
-    choice
-    .isWrong
-    .isCorrect
-    .isPoll
-    text
-    image
-    answer
-    explanation-text
-    explanation-image
-
-  CAPTURING INPUT: DONE
-    v-model on radiogroup when the question is answered will emit input event up to questionnaire
-    will also emit answerChosen event and payload object {}
-      --> this.isCorrect, this.answer (v-model from radiogroup), and this.question.question
+  TODO:implement check box as choices if there is more than 1 right answer
 */
 
 let questionTemplate = `
@@ -32,6 +8,8 @@ let questionTemplate = `
     <template v-if="questionImage">
         <img :src="question.image" class="question__image">
     </template>
+
+    <template v-if="question.answerType === 'radio'">
     <radio-group class="question__choices" v-model="answer">
       <radio-component
         :id="choice.text.replace(/\s/g, '')"
@@ -43,6 +21,40 @@ let questionTemplate = `
         :label="choice.text">
       </radio-component>
     </radio-group>
+  </template>
+
+  <template v-else-if="question.answerType === 'checkbox'">
+    <checkbox-group class="question__choice" v-model="answers">
+      <checkbox-component
+        :id="choice.text.replace(/\s/g, '')"
+        class="question__choice"
+        :class="{'is-correct':choiceIsCorrect(choice.text),
+        'is-wrong': choiceIsWrong(choice.text)}"
+        v-for="choice in question.choices"
+        :key="choice.text"
+        :label="choice.text">
+      </checkbox-component>
+    </checkbox-group>
+  </template>
+
+  <template v-else-if="question.answerType === 'textbox'">
+    <text-component
+      :placeholder="question.question"
+      :type="question.answerType"
+      :maxlength="question.answerMaxLength"
+      class="question__choice" v-model="answer">
+    </text-component>
+  </template>
+
+  <template v-else>
+    <text-component
+      :placeholder="question.question"
+      :type="question.answerType"
+      :maxlength="question.answerMaxLength"
+      :autosize="true"
+      class="question__choice" v-model="answer">
+    </text-component>
+  </template>
 
     <template v-if="parentProps.showAnswer">
         <h6 class="question__answer">{{question.answer}}</h6>
@@ -71,6 +83,9 @@ import Form from '../../organisms/Form/Form'
 import FormItem from '../../organisms/Form/FormItem'
 import RadioGroup from '../../molecules/RadioGroup/RadioGroup'
 import Radio from '../../atoms/Radio/Radio'
+import CheckboxGroup from '../../molecules/CheckboxGroup/CheckboxGroup'
+import Checkbox from '../../atoms/Checkbox/Checkbox'
+import Text from '../../molecules/InputField/InputField'
 import Emitter from '../../mixins/emitter'
 
 export default {
@@ -80,6 +95,7 @@ export default {
     data: function () {
         return {
             answer: "",
+            answers: [],
             answered: false
         }
     },
@@ -97,7 +113,12 @@ export default {
         }
     },
     methods: {
-      chooseAnswer() {
+      /**
+       * @description choose answer
+       * - if answer is whatever
+       * @param {number} answer
+       */
+      chooseAnswer(answer) {
         //send the event with payload to the parent
     //     v-model on radiogroup when the question is answered will emit input event up to questionnaire
     // will also emit answerChosen event and payload object {}
@@ -138,85 +159,38 @@ export default {
         'radio-group': RadioGroup,
         'form-component': Form,
         'form-item': FormItem,
-        'radio-component': Radio
+        'radio-component': Radio,
+        'checkbox-group': CheckboxGroup,
+        'checkbox-component': Checkbox,
+        'text-component': Text
     },
     mixins: [Emitter]
 }
 
-{
-    /* <style lang="scss">
-  #question-form {
-  position: relative;
-  padding: 0 50px;
-  .button {
-  position: absolute;
-  }
-  .checkbox-group {
-  .checkbox {
-    display: inline-block;
-    width: 45%;
-  }
-  }
-  .radio-group {
-  .radio {
-    margin: 10px 0 0 0;
-    display: inline-block;
-    width: 45%;
-  }
-  }
-  .select {
-  max-width: 100%;
-  }
-  .form-item {
-  position: relative;
+/* let question know if it was answered correctly DONE
+  let parent know if correct or wrong DONE
+  PARENT PROPS: DONE
+    show answer
+    show explanations
+    show if right or wrong
+    show poll
+    submittable
+    is Poll
+  elements: DONE
+    choices
+    choice
+    .isWrong
+    .isCorrect
+    .isPoll
+    text
+    image
+    answer
+    explanation-text
+    explanation-image
 
-  .form-item__label {
-    z-index: 2;
-    background: white;
-    padding: 12px 6px 12px 6px;
-    // color: #BC61A8; // nth($pe-primary-color-list, 3)
-    color: #505050;
-    font-family: "cabinbold";
-  }
-  }
+  CAPTURING INPUT: DONE
+    v-model on radiogroup when the question is answered will emit input event up to questionnaire
+    will also emit answerChosen event and payload object {}
+      --> this.isCorrect, this.answer (v-model from radiogroup), and this.question.question
 
-  .form {
-  padding: 25px 0px;
-  .form-item {
-    margin: 25px 0px;
-  }
-  &_label-left {
-    .form-item {
-    padding: 20px 10px;
-    margin: 10px 0;
-    }
-    .form-item__label {
-    left: 0;
-    text-align: left;
-    }
-  }
-  &_label-right {
-    .form-item {
-    padding: 20px 10px;
-    margin: 10px 0;
-    }
-    .form-item__label {
-    left: 0;
-    text-align: right;
-    }
-  }
-  &_label-top {
-    .form-item {
-    padding: 20px 10px;
-    margin: 30px 0;
-    border-top: 1px solid transparentize(#b6b6b6, 0.5); // nth($pe-greyscale-color-list, 4);
-    border-radius: 0px;
-    }
-    .form-item__label {
-    top: -25px;
-    }
-  }
-  }
-  }
-  </style> */
-}
+*/
