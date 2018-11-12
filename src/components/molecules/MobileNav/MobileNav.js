@@ -7,7 +7,7 @@ let mobileNavTemplate = `
         <div class="mobile-nav__bar" :class="{'is-open': isOpen}">
             <div class="mobile-nav__menu">
                 <template v-if="isAuthenticated">
-                    <a class="mobile-nav__menu-heading" href="">{{userName}}</a>
+                    <router-link :to="homeLink" class="mobile-nav__menu-heading">{{ userName }}</router-link>
                     <ul class="mobile-nav__menu-list">                 
                         <li class="mobile-nav__menu-item" v-for="link in links" :key="link.name">
                             <router-link :to="link" class="mobile-nav__menu-link">{{ link.name }}</router-link>
@@ -15,6 +15,7 @@ let mobileNavTemplate = `
                     </ul>                
                 </template>
                 <template v-else>
+                    <router-link :to="homeLink" class="mobile-nav__menu-heading">{{ homeLink.name }}</router-link>
                     <ul class="mobile-nav__menu-list">                 
                         <li class="mobile-nav__menu-item" v-for="link in authLinks" :key="link.name">
                             <router-link :to="link" class="mobile-nav__menu-link">{{ link.name }}</router-link>
@@ -32,14 +33,15 @@ let mobileNavTemplate = `
         <div class="mobile-nav__bar" :class="{'is-open': isOpen}">
             <div class="mobile-nav__menu">
                 <template v-if="isAuthenticated">
-                    <a class="mobile-nav__menu-heading" href="">{{userName}}</a>
+                    <a class="mobile-nav__menu-heading" :href="homeLink.url">{{userName}}</a>
                     <ul class="mobile-nav__menu-list"> 
                         <li class="mobile-nav__menu-item" v-for="link in links" :key="link.text">
                             <a :href="link.url" class="mobile-nav__menu-link">{{ link.text }}</a>
                         </li>                
                     </ul>
                 </template>
-                <template v-else>                    
+                <template v-else>
+                    <a class="mobile-nav__menu-heading" :href="homeLink.url">{{homeLink.text}}</a>                    
                     <ul class="mobile-nav__menu-list"> 
                         <li class="mobile-nav__menu-item" v-for="link in authLinks" :key="link.text">
                             <a :href="link.url" class="mobile-nav__menu-link">{{ link.text }}</a>
@@ -95,7 +97,13 @@ export default {
                     {text: "Log In", url: "#"}
                 ];
             } 
-        }
+        },
+        homeLink: {
+            type: Object,
+            default: function () {
+                return {text: "Home", url: "/"}
+            }
+        },
     },
     data: function () {
         return {

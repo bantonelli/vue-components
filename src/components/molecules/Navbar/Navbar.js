@@ -6,15 +6,31 @@ import _ from 'lodash';
 let navbarTemplate = `
 <div id="navbar" class="navbar">
     <div class="navbar__container">
-        <a class="navbar__brand" href="#">
-            <img 
-                class="navbar__brand-image" 
-                sizes="(max-width: 479px) 30vw, 100px" 
-                src="../../../../static/images/ProEdify-Logo_FINAL_WHITE.png" 
-                srcset="../../../../static/images/ProEdify-Logo_FINAL_WHITE.png 500w, ../../..images/ProEdify-Logo_FINAL_WHITE.png 800w, ../../../../static/images/ProEdify-Logo_FINAL_WHITE.png 1080w, ../../../assets/images/ProEdify-Logo_FINAL_WHITE.png 1600w, ../../../assets/images/ProEdify-Logo_FINAL_WHITE.png 2000w, ../../../../static/images/ProEdify-Logo_FINAL_WHITE.png 2438w" 
-                width="1219"
+        <template v-if="hasRouter">
+            <router-link                 
+                :to="homeLink" 
+                class="navbar__brand"
             >
-        </a>
+                <img 
+                    class="navbar__brand-image" 
+                    sizes="(max-width: 479px) 30vw, 100px" 
+                    :src="brandSource" 
+                    :srcset="brandSourceSet" 
+                    width="1219"
+                >
+            </router-link>
+        </template>
+        <template v-else>
+            <a class="navbar__brand" :href="homeLink.url">
+                <img 
+                    class="navbar__brand-image" 
+                    sizes="(max-width: 479px) 30vw, 100px" 
+                    :src="brandSource" 
+                    :srcset="brandSourceSet" 
+                    width="1219"
+                >
+            </a>
+        </template>
         <div class="navbar__search">
             <autocomplete
                 v-model="state1"
@@ -131,6 +147,20 @@ export default {
                     {text: "Log In", url: "#"}
                 ];
             } 
+        },
+        homeLink: {
+            type: Object,
+            default: function () {
+                return {text: "Home", url: "/"}
+            }
+        },
+        brandSourceSet: {
+            type: String,
+            default: "../../../../static/images/ProEdify-Logo_FINAL_WHITE.png 500w, ../../..images/ProEdify-Logo_FINAL_WHITE.png 800w, ../../../../static/images/ProEdify-Logo_FINAL_WHITE.png 1080w, ../../../assets/images/ProEdify-Logo_FINAL_WHITE.png 1600w, ../../../assets/images/ProEdify-Logo_FINAL_WHITE.png 2000w, ../../../../static/images/ProEdify-Logo_FINAL_WHITE.png 2438w"
+        },
+        brandSource: {
+            type: String,
+            default: "../../../../static/images/ProEdify-Logo_FINAL_WHITE.png"
         }
     },
     data: function () {
