@@ -28,7 +28,8 @@ Child: CollectionItem
 let collectionTemplate = `
 <div class="collection" ref="container">
     <collection-item 
-        v-for="item in internalData" 
+        v-for="item in internalData"
+        :key="item._id" 
         :item="item" 
         :mixer="mixer" 
         :componentToUse="component">            
@@ -40,31 +41,31 @@ let collectionTemplate = `
 
 let data1 = [
     {
-        id: 142,
+        _id: 142,
         name: 'Joe',
         role: 'Developer',
         age: 22
     },
     {
-        id: 242,
+        _id: 242,
         name: 'Zack',
         role: 'Project Manager',
         age: 45
     },
     {
-        id: 243,
+        _id: 243,
         name: 'Kumar',
         role: 'Designer',
         age: 29
     },
     {
-        id: 402,
+        _id: 402,
         name: 'Steph',
         role: 'Developer',
         age: 33
     },
     {
-        id: 511,
+        _id: 511,
         name: 'Sohyun',
         role: 'Developer',
         age: 23
@@ -83,7 +84,7 @@ export default {
     data() {
         // You may use any key as your unique ID (e.g. 'id', '_id', 'Id', etc)
         // You will specify using the data.uidKey configuration option
-        // In this case we are using 'id'
+        // In this case we are using '_id'
         return {
             mixer: null,
             ogData: true,
@@ -111,7 +112,7 @@ export default {
         const mixer = mixitup(container, {
             data: {
                 // Specify unique ID key on the dataSet (users)
-                uidKey: 'id'
+                uidKey: '_id'
             },
             // must also specify a render.target function
             render: {
@@ -154,12 +155,12 @@ export default {
         },
         toggleData() {
             this.broadcast(this.componentName, 'collectionUpdate', []);
-            if (!this.hideData) {
+            if (!this.h_ideData) {
                 this.mixer.dataset([]);
             } else {
                 this.mixer.dataset(this.internalData);
             }
-            this.hideData = !this.hideData;
+            this.h_ideData = !this.h_ideData;
         },
         sortData(sortFunction) {            
             this.broadcast(this.componentName, 'collectionUpdate', []);
