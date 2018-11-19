@@ -14,7 +14,7 @@ let usernameDropdownTemplate = `
         <template slot="header">
             <a :href="headerLink.url">{{headerLink.text}}</a>
         </template>       
-        <dropdown-menu-item v-for="link in links">
+        <dropdown-menu-item v-for="link in links" :key="link.text">
             <a :href="link.url">{{link.text}}</a>
         </dropdown-menu-item>
         <template slot="footer">
@@ -25,7 +25,7 @@ let usernameDropdownTemplate = `
         <template slot="header">
             <router-link :to="headerLink">{{headerLink.name}}</router-link>
         </template>       
-        <dropdown-menu-item v-for="link in links">
+        <dropdown-menu-item v-for="link in links" :key="link.name">
             <router-link :to="link">{{link.name}}</router-link>
         </dropdown-menu-item>
         <template slot="footer">

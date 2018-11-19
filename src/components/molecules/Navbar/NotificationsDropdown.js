@@ -14,7 +14,7 @@ let notificationsDropdownTemplate = `
     <template slot="header">
         <a href="#">Notifications</a>
     </template>       
-    <dropdown-menu-item v-for="notification in notifications">
+    <dropdown-menu-item v-for="notification in notifications" :key="notification._id">
         <notification
             :notification="notification"
             :category-map="categoryMap"
@@ -41,6 +41,7 @@ export default {
             default: function () {
                 return [
                     {
+                        _id: 1,
                         title: "Human Anatomy Course Launched",
                         date: new Date(2017, 9, 15, 6, 10),
                         message: "Register for this new course soon!",
@@ -49,6 +50,7 @@ export default {
                         category: "Course"                
                     },
                     {
+                        _id: 2,
                         title: "TEAS V6 Practice Tests Now Available",
                         date: new Date(2017, 9, 15, 6, 10),
                         message: "Practice tests now updated to the new TEAS format. Get started Today!",
@@ -56,6 +58,7 @@ export default {
                         category: "Product"                
                     },
                     {
+                        _id: 3,
                         title: "Fall Sale Begins",
                         date: new Date(2017, 9, 15, 6, 10),
                         message: "All Course Modules and Test Guides Half Off!",
@@ -63,6 +66,7 @@ export default {
                         category: "Announcement"                
                     },
                     {
+                        _id: 4,
                         title: "ProEdify Site Is Live!",
                         date: new Date(2017, 9, 15, 6, 10),
                         message: "It's Finally here the ProEdify Web App. Time to Start Studying!",
