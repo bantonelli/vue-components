@@ -8,11 +8,21 @@ import _ from 'lodash';
 
 let collectionItemTemplate = `
 <div class="collection__item" ref="collectionItem" data-ref="item">
-    <component
-        v-bind:is="componentToUse"
-        :item="item"
-    >
-    </component>
+    <template v-if="childComponent">
+        <component
+            v-bind:is="componentToUse"
+            :item="item"
+            :childComponent="childComponent"
+        >
+        </component>
+    </template>
+    <template v-else>
+        <component
+            v-bind:is="componentToUse"
+            :item="item"
+        >
+        </component>
+    </template>        
 </div>
 `;
 
@@ -28,7 +38,8 @@ let collectionItem = {
         item: null,
         index: null,
         mixer: null,
-        componentToUse: null
+        componentToUse: null,
+        childComponent: null
     },
     // mounted () {
     //     // console.log("CHILD: ", this.$children[0].item);

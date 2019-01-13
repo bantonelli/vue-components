@@ -32,7 +32,9 @@ let collectionTemplate = `
         :key="item._id" 
         :item="item" 
         :mixer="mixer" 
-        :componentToUse="component">            
+        :componentToUse="component"
+        :childComponent="child"
+        >
     </collection-item>
 </div>
 `;
@@ -99,7 +101,8 @@ export default {
                 return data1;
             }
         },
-        component: null
+        component: null,
+        child: null
     },
     created() {
         this.internalData = [].concat(this.dataset);        
