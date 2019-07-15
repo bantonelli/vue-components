@@ -1,4 +1,6 @@
-import mixitup from 'mixitup';
+if (process.client) {
+    const mixitup = require('mixitup');
+}
 import _ from 'lodash';
 
 import Emitter from '../../utils/mixins/emitter';

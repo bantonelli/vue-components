@@ -34,7 +34,7 @@ const inputTemplate = `
 
 export default {
     template: inputTemplate,
-    name: 'input',
+    name: 'Input',
     props: {
         placeholder: {
             type: String, 
